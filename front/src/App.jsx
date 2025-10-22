@@ -1,7 +1,9 @@
-import './App.css';
+import Login from './components/LoginComponents/Login.jsx';
 
 const App = () => {
-	return <></>;
+	return (
+		<Login />
+	)
 };
 
 export default App;
