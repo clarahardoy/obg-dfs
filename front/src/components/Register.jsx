@@ -12,6 +12,9 @@ const Register = () => {
     <div className="register-container">
       <form id="register-form" autoComplete="off" noValidate>
         <MineTitle />
+        <p className="register-subtitle" role="doc-subtitle">
+          Completá los datos y creá tu cuenta en <span className="brand">BookMemory</span>.
+        </p>
         <NameForm />
         <SurnameForm />
         <EmailForm />

@@ -11,8 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* mismo gradiente que login; si querés diferenciar, invertí los colores */
-    background: linear-gradient(135deg, var(--rosado) 0%, var(--beige) 100%);
+    background: linear-gradient(135deg, var(--marronClaro) 0%, var(--beige) 100%);
     padding: 120px 20px 40px;
 }
 
@@ -30,6 +29,24 @@
     transition: all 0.3s ease;
 }
 
+/* SUBTÍTULO DEL REGISTER */
+.register-subtitle {
+    margin-top: -0.25rem;
+    margin-bottom: 1.4rem;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.35;
+    color: var(--marronOscuro);
+    opacity: 0.9;
+}
+
+.register-subtitle .brand {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--marronOscuro);
+}
+
 /* RESPONSIVO */
 @media (max-width: 768px) {
     .register-section {
@@ -41,5 +58,10 @@
         max-width: 95vw;
         padding: 2rem 1.5rem;
         border-radius: 0.7rem;
+    }
+
+    .register-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
     }
 }
