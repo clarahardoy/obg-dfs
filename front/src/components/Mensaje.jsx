@@ -1,6 +1,6 @@
 const Mensaje = () => {
     return (
-        <p id="mensaje" class="mensaje"></p>
+        <p id="mensaje" className="mensaje"></p>
     );
 };
 

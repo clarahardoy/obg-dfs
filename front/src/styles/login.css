@@ -1,0 +1,42 @@
+/* evita que padding/borde sumen ancho extra */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.login-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosado) 0%, var(--beige) 100%);
+    padding: 120px 20px 40px;
+}
+
+.login-container {
+    background: var(--beige);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    min-width: 320px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .login-section {
+        padding: 100px 15px 30px;
+    }
+
+    .login-container {
+        min-width: unset;
+        max-width: 95vw;
+        padding: 2rem 1.5rem;
+        border-radius: 0.7rem;
+    }
+}
