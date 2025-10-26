@@ -1,7 +1,6 @@
 .dashboard-section {
 	min-height: 100vh;
 	background: var(--gris);
-	padding: 2rem 1rem;
 }
 
 .dashboard-container {

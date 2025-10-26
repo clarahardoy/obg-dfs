@@ -8,10 +8,13 @@ import './styles/register.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Dashboard from './components/Dashboard';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 	return (
 		<Provider store={store}>
+			<ToastContainer autoClose={2000} pauseOnHover={false} />
 			<Routes>
 				<Route path='/' element={<Navigate to='/login' replace />} />
 				<Route
