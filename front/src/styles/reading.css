@@ -1,0 +1,83 @@
+.reading-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem;
+	background-color: var(--beigeClaro);
+	border: 1px solid var(--beige);
+	border-radius: 0.5rem;
+}
+
+.reading-item:hover {
+	border-color: var(--marronClaro);
+	background-color: var(--marronOscuro);
+	cursor: pointer;
+}
+
+.reading-item:hover .reading-icon,
+.reading-item:hover .reading-title,
+.reading-item:hover .reading-author,
+.reading-actions button {
+	color: var(--blanco);
+}
+
+.reading-info {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.reading-icon {
+	height: 2.5rem;
+	width: 2.5rem;
+	border-radius: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.reading-title {
+	font-weight: 500;
+	color: var(--negro);
+}
+
+.reading-author {
+	font-size: 0.875rem;
+	color: var(--grisOscuro);
+}
+
+.reading-actions {
+	display: flex;
+	gap: 0.5rem;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+.reading-item:hover .reading-actions {
+	opacity: 1;
+}
+
+.reading-item:hover .reading-actions button:hover {
+	background-color: var(--gris);
+	color: var(--rosado);
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border-radius: 0.375rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	padding: 0.25rem 0.75rem;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	color: var(--foreground);
+	transition: color 0.2s, background-color 0.2s;
+}
+
+.btn-sm {
+	padding: 0.25rem 0.5rem;
+}
