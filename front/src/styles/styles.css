@@ -1,50 +1,95 @@
 :root {
-    --negro: #080B0D;
-    --blanco: #BFBFB0;
-    --rosado: #B84065;
-    --gris: #69868C;
-    --beigeClaro: #e7dbd5;
-    --beige: #F2DBCE;
-    --marronClaro: #D98162;
-    --marronOscuro: #592316;
+	--negro: #252323;
+	--blanco: #ffffff;
+	--rosado: #b84065;
+	--gris: #fafafa;
+	--beigeClaro: #f2e9e4;
+	--beige: #ede0d4;
+	--marronClaro: #b08968;
+	--marronOscuro: #7f5539;
+	--grisMediano: #e3e3e3;
+	--grisOscuro: #6c757d;
+	--radius: 0.625rem;
+	--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+	border-color: var(--gris);
+	outline-color: var(--gris);
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background-color: var(--gris);
+	color: var(--negro);
+	font-family: var(--font-sans);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 .mine-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    color: var(--marronOscuro);
-    letter-spacing: 1px;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: var(--marronOscuro);
+	letter-spacing: 1px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 700;
 }
 
 /* MENSAJE DE ERROR*/
 .mensaje-error {
-    color: #ff6b6b;
-    font-size: 0.85rem;
-    margin-top: 0.3rem;
-    min-height: 1.2em;
-    transition: opacity 0.2s;
-    font-family: 'Roboto', sans-serif;
+	color: #ff6b6b;
+	font-size: 0.85rem;
+	margin-top: 0.3rem;
+	min-height: 1.2em;
+	transition: opacity 0.2s;
+	font-family: 'Roboto', sans-serif;
 }
 
 /* MENSAJE DE ERROR*/
 .mensaje-error.visible {
-    display: block;
+	display: block;
+}
+
+/* Para las toasts que notifican */
+.Toastify__progress-bar--success {
+	background-color: var(--marronOscuro) !important;
+}
+
+.Toastify__toast--success .Toastify__toast-icon svg {
+	fill: var(--marronOscuro) !important;
+}
+
+.Toastify__toast--success {
+	border-left: 4px solid var(--marronOscuro);
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+	background-color: var(--rosado) !important;
+	border-left: 4px solid var(--rosado);
+}
+
+.Toastify__toast--warning .Toastify__toast-icon svg {
+	fill: var(--rosado) !important;
 }
 
 /* RESPONSIVO */
 @media (max-width: 768px) {
-    .mine-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
+	.mine-title {
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
 }
