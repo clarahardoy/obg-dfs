@@ -4,8 +4,7 @@
     justify-items: center;
 }
 
-.form-group,
-.form-input {
+.form-group {
     width: 100%;
     max-width: 360px;
     margin-inline: auto;

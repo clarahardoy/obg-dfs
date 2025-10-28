@@ -33,7 +33,9 @@ const App = () => {
 						</section>
 					}
 				/>
-				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path="/dashboard" element={<ProtectedRoute />}>
+					<Route path='/dashboard' element={<Dashboard />} />
+				</Route>
 				<Route path='*' element={<Navigate to='/login' replace />} />
 			</Routes>
 		</Provider>
