@@ -10,12 +10,9 @@ export const loginService = async (email, password) => {
 	}
 };
 
-export const registerService = async (email, password) => {
+export const registerService = async (nuevoUsuario) => {
 	try {
-		const response = await apiClient.post('/auth/register', {
-			email,
-			password,
-		});
+		const response = await apiClient.post('/auth/register', nuevoUsuario);
 		return response.data;
 	} catch (error) {
 		console.error('No se pudo registrar el usuario:', error);

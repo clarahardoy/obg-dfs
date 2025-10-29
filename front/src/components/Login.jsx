@@ -1,92 +1,117 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useId, useRef, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginService } from "../services/auth.service.js";
 import { loguear } from "../features/auth/auth.slice.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
 
+function validate(form) {
+  const { email, password } = form;
+  if (!email.trim() || !password) {
+    return { valid: false, reason: "Todos los campos son obligatorios" };
+  }
+  return { valid: true, reason: "" };
+}
+
 const Login = () => {
+  const idEmail = useId();
+  const idPassword = useId();
 
-	const idEmail = useId();
-	const idPassword = useId();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-	const campoEmail = useRef(null);
-	const campoPassword = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const [error, setError] = useState("");
-	const [cargando, setCargando] = useState(false);
+  const v = useMemo(() => validate(form), [form]);
+  const canSubmit = v.valid && !cargando;
 
-	const validarLogin = async (e) => {
-		e.preventDefault();
-		const email = campoEmail.current.value.trim();
-		const password = campoPassword.current.value;
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    if (error) setError("");
+  };
 
-		if ((!email) || (!password)) {
-			setError("Todos los campos son obligatorios");
-			return;
-		}
-		try {
-			setCargando(true);
-			setError("");
+  const validarLogin = async (e) => {
+    e.preventDefault();
 
-			const data = await loginService(email, password);
-			if (data.token) {
-				localStorage.setItem("token", data.token);
-				dispatch(loguear());
-				navigate("/dashboard");
-			} else {
-				setError("Credenciales incorrectas");
-			}
-		} catch (err) {
-			setError(err.message);
-			setError("Credenciales incorrectas");
-		} finally {
-			setCargando(false);
-		}
-	};
+    const check = validate(form);
+    if (!check.valid) {
+      setError(check.reason);
+      return;
+    }
 
-	return (
-		<div className="login-container">
-			<form id="login-form" autoComplete="off" onSubmit={validarLogin}>
-				<MineTitle />
+    try {
+      setCargando(true);
+      setError("");
 
-				<div className="form-group">
-					<label htmlFor={idEmail}>Email</label>
-					<input type="email" id={idEmail} required
-						autoComplete="email"
-						placeholder="Ingresa tu email"
-						ref={campoEmail}
-					/>
-				</div>
+      const data = await loginService(form.email.trim(), form.password);
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+        dispatch(loguear({ user: data.user }));
+        navigate("/dashboard");
+      } else {
+        setError("Credenciales incorrectas");
+      }
+    } catch {
+      setError("Credenciales incorrectas");
+    } finally {
+      setCargando(false);
+    }
+  };
 
-				<div className="form-group">
-					<label htmlFor={idPassword}>Contraseña</label>
-					<input type="password" id={idPassword} required
-						autoComplete="current-password"
-						placeholder="Ingresa tu contraseña"
-						ref={campoPassword}
-					/>
-				</div>
+  return (
+    <div className="login-container">
+      <form id="login-form" autoComplete="off" onSubmit={validarLogin} noValidate>
+        <MineTitle />
 
-				{error && (
-					<div className="mensaje-error" role="alert">
-						{error}
-					</div>
-				)}
+        <div className="form-group">
+          <label htmlFor={idEmail}>Email</label>
+          <input
+            type="email"
+            id={idEmail}
+            name="email"
+            required
+            autoComplete="username"
+            placeholder="Ingresa tu email"
+            value={form.email}
+            onChange={onChange}
+          />
+        </div>
 
-				<Boton type="submit" id="login-btn" disabled={cargando}>
-					{cargando ? "Ingresando..." : "Iniciar sesión"}
-				</Boton>
+        <div className="form-group">
+          <label htmlFor={idPassword}>Contraseña</label>
+          <input
+            type="password"
+            id={idPassword}
+            name="password"
+            required
+            autoComplete="current-password"
+            placeholder="Ingresa tu contraseña"
+            value={form.password}
+            onChange={onChange}
+          />
+        </div>
 
-				<div className="actions">
-					<Link to="/register" className="back-btn">Crear cuenta →</Link>
-				</div>
-			</form>
-		</div >
-	);
+        {error && (
+          <div className="mensaje-error" role="alert">
+            {error}
+          </div>
+        )}
+
+        <Boton type="submit" id="login-btn" disabled={!canSubmit}>
+          {cargando ? "Ingresando..." : "Iniciar sesión"}
+        </Boton>
+
+        <div className="actions">
+          <Link to="/register" className="back-btn">Crear cuenta →</Link>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Login;
