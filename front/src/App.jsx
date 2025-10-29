@@ -1,15 +1,16 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login.jsx';
-import Register from './components/Register.jsx';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { ToastContainer } from 'react-toastify';
 import './styles/styles.css';
 import './styles/form.css';
 import './styles/login.css';
 import './styles/register.css';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
 import Dashboard from './components/Dashboard';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
 	return (
