@@ -49,7 +49,7 @@ input[type="text"]:focus {
     border-color: var(--marronOscuro);
     outline: none;
     background: var(--beigeClaro);
-    color: var(--marronOscuro);
+    color: var(--rosado);
     box-shadow: 0 0 0 3px rgba(115, 65, 36, 0.2);
 }
 
@@ -63,7 +63,6 @@ input[type="text"]:focus::placeholder {
 button[type="submit"] {
     width: 100%;
     max-width: 360px;
-    /* mismo ancho que inputs */
     margin-inline: auto;
     padding: 0.75rem 1rem;
     background: var(--marronOscuro);
@@ -87,8 +86,10 @@ button[type="submit"]:hover:not([disabled]) {
 
 /* BOTON LOGIN DESACTIVADO HASTA QUE INGRESE MAIL Y CONTRASEÑA */
 button[type="submit"][disabled] {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.5);
+    background-color: #6c757d5b;
+    color: #d5d4d4;
+    /* background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);*/
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -121,35 +122,11 @@ button[type="submit"][disabled] {
 }
 
 .back-btn:hover {
-    background: var(--beigeClaro);
+    color: var(--rosado);
+    border: 1px dashed var(--rosado);
     opacity: 1;
     transform: translateY(-1px);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-}
-
-/* VARIANTE DEL BOTÓN (usa tu <Boton className="btn btn-muted" />) */
-.btn.btn-muted {
-    background: transparent;
-    color: var(--marronOscuro);
-    border: 1.5px solid var(--marronOscuro);
-}
-
-.btn.btn-muted:hover:not([disabled]) {
-    background: var(--rosado);
-    color: var(--beige);
-    border-color: var(--rosado);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-}
-
-/* Si querés un estado disabled más suave para la variante muted */
-.btn.btn-muted[disabled] {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(0, 0, 0, 0.35);
-    border-color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
 }
 
 /* RESPONSIVO */

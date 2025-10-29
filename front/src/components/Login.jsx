@@ -6,112 +6,114 @@ import { loguear } from "../features/auth/auth.slice.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
 
+const INITIAL_FORM = { email: "", password: "" };
+
 function validate(form) {
-  const { email, password } = form;
-  if (!email.trim() || !password) {
-    return { valid: false, reason: "Todos los campos son obligatorios" };
-  }
-  return { valid: true, reason: "" };
+	const { email = "", password = "" } = form || {};
+	if (!email.trim() || !password) {
+		return { valid: false, reason: "Todos los campos son obligatorios" };
+	}
+	return { valid: true, reason: "" };
 }
 
 const Login = () => {
-  const idEmail = useId();
-  const idPassword = useId();
+	const idEmail = useId();
+	const idPassword = useId();
 
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const [cargando, setCargando] = useState(false);
+	const [form, setForm] = useState(INITIAL_FORM);
+	const [error, setError] = useState("");
+	const [cargando, setCargando] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-  const v = useMemo(() => validate(form), [form]);
-  const canSubmit = v.valid && !cargando;
+	const v = useMemo(() => validate(form), [form]);
+	const canSubmit = v.valid && !cargando;
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    if (error) setError("");
-  };
+	const onChange = (e) => {
+		const { name, value } = e.target;
+		setForm((f) => ({ ...f, [name]: value }));
+		if (error) setError("");
+	};
 
-  const validarLogin = async (e) => {
-    e.preventDefault();
+	const validarLogin = async (e) => {
+		e.preventDefault();
 
-    const check = validate(form);
-    if (!check.valid) {
-      setError(check.reason);
-      return;
-    }
+		const check = validate(form);
+		if (!check.valid) {
+			setError(check.reason);
+			return;
+		}
 
-    try {
-      setCargando(true);
-      setError("");
+		try {
+			setCargando(true);
+			setError("");
 
-      const data = await loginService(form.email.trim(), form.password);
-      if (data?.token) {
-        localStorage.setItem("token", data.token);
-        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
-        dispatch(loguear({ user: data.user }));
-        navigate("/dashboard");
-      } else {
-        setError("Credenciales incorrectas");
-      }
-    } catch {
-      setError("Credenciales incorrectas");
-    } finally {
-      setCargando(false);
-    }
-  };
+			const data = await loginService(form.email.trim(), form.password);
 
-  return (
-    <div className="login-container">
-      <form id="login-form" autoComplete="off" onSubmit={validarLogin} noValidate>
-        <MineTitle />
+			if (data?.token) {
+				localStorage.setItem("token", data.token);
+				if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+				dispatch(loguear());
+				navigate("/dashboard");
+			} else {
+				setError("Credenciales incorrectas");
+				setForm(INITIAL_FORM);
+			}
+		} catch (err) {
+			const status = err?.response?.status;
+			setError(status >= 500 ? "No se pudo iniciar sesión. Intenta más tarde." : "Credenciales incorrectas");
+			setForm(INITIAL_FORM);
+		} finally {
+			setCargando(false);
+		}
+	};
 
-        <div className="form-group">
-          <label htmlFor={idEmail}>Email</label>
-          <input
-            type="email"
-            id={idEmail}
-            name="email"
-            required
-            autoComplete="username"
-            placeholder="Ingresa tu email"
-            value={form.email}
-            onChange={onChange}
-          />
-        </div>
+	return (
+		<div className="login-container">
+			<form id="login-form" autoComplete="off" onSubmit={validarLogin} noValidate>
+				<MineTitle />
 
-        <div className="form-group">
-          <label htmlFor={idPassword}>Contraseña</label>
-          <input
-            type="password"
-            id={idPassword}
-            name="password"
-            required
-            autoComplete="current-password"
-            placeholder="Ingresa tu contraseña"
-            value={form.password}
-            onChange={onChange}
-          />
-        </div>
+				<div className="form-group">
+					<label htmlFor={idEmail}>Email</label>
+					<input
+						type="email"
+						id={idEmail}
+						name="email"
+						required
+						autoComplete="username"
+						placeholder="Ingresa tu email"
+						value={form.email}
+						onChange={onChange}
+					/>
+				</div>
 
-        {error && (
-          <div className="mensaje-error" role="alert">
-            {error}
-          </div>
-        )}
+				<div className="form-group">
+					<label htmlFor={idPassword}>Contraseña</label>
+					<input
+						type="password"
+						id={idPassword}
+						name="password"
+						required
+						autoComplete="current-password"
+						placeholder="Ingresa tu contraseña"
+						value={form.password}
+						onChange={onChange}
+					/>
+				</div>
 
-        <Boton type="submit" id="login-btn" disabled={!canSubmit}>
-          {cargando ? "Ingresando..." : "Iniciar sesión"}
-        </Boton>
+				{error && <div className="mensaje-error" role="alert">{error}</div>}
 
-        <div className="actions">
-          <Link to="/register" className="back-btn">Crear cuenta →</Link>
-        </div>
-      </form>
-    </div>
-  );
+				<Boton type="submit" id="login-btn" disabled={!canSubmit}>
+					{cargando ? "Ingresando..." : "Iniciar sesión"}
+				</Boton>
+
+				<div className="actions">
+					<Link to="/register" className="back-btn">Crear cuenta →</Link>
+				</div>
+			</form>
+		</div>
+	);
 };
 
 export default Login;

@@ -1,4 +1,3 @@
-// Boton.jsx
 const Boton = ({
 	type = "button",
 	id,

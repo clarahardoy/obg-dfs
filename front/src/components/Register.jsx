@@ -1,4 +1,4 @@
-import { useId, useRef, useState, useMemo } from "react";
+import { useId, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerService } from "../services/auth.service.js";
@@ -6,8 +6,22 @@ import { loguear } from "../features/auth/auth.slice.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
 
+const INITIAL_FORM = {
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  repeatPassword: "",
+};
+
 function validate(form) {
-  const { name, surname, email, password, repeatPassword } = form;
+  const {
+    name = "",
+    surname = "",
+    email = "",
+    password = "",
+    repeatPassword = "",
+  } = form || {};
 
   if (!name.trim() || !surname.trim() || !email.trim() || !password || !repeatPassword) {
     return { valid: false, reason: "Todos los campos son obligatorios" };
@@ -15,25 +29,17 @@ function validate(form) {
   if (password !== repeatPassword) {
     return { valid: false, reason: "Las contraseñas no coinciden" };
   }
-  // Podés sumar más reglas aquí (longitud mínima, regex de email, etc.)
   return { valid: true, reason: "" };
 }
 
 const Register = () => {
-
   const idNombre = useId();
   const idApellido = useId();
   const idEmail = useId();
   const idPassword = useId();
   const idRepeatPassword = useId();
 
-  const [form, setForm] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-  });
+  const [form, setForm] = useState(INITIAL_FORM);
   const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
 
@@ -72,15 +78,19 @@ const Register = () => {
       setError("");
 
       const data = await registerService(nuevoUsuario);
-      if (data.token) {
+
+      if (data?.token) {
         localStorage.setItem("token", data.token);
+        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
         dispatch(loguear());
         navigate("/dashboard");
       } else {
-        setError(data.error ?? "No se recibi+o token");
+        setError(data?.error ?? "No se recibió token");
+        setForm((f) => ({ ...f, password: "", repeatPassword: "" }));
       }
-    } catch (error) {
-      setError(error.response?.data?.message ?? "Ocurrió un error inesperado, intentá más tarde");
+    } catch (err) {
+      setError(err?.response?.data?.message ?? "Ocurrió un error inesperado, intentá más tarde");
+      setForm((f) => ({ ...f, password: "", repeatPassword: "" }));
     } finally {
       setCargando(false);
     }
@@ -169,11 +179,7 @@ const Register = () => {
           )}
         </div>
 
-        {error && (
-          <div className="mensaje-error" role="alert">
-            {error}
-          </div>
-        )}
+        {error && <div className="mensaje-error" role="alert">{error}</div>}
 
         <Boton type="submit" id="register-btn" className="btn btn-muted" disabled={!canSubmit}>
           {cargando ? "Creando cuenta..." : "Crear cuenta"}
