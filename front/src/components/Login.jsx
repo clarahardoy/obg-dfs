@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginService } from "../services/auth.service.js";
 import { loguear } from "../features/auth/auth.slice.js";
@@ -32,10 +32,10 @@ const Login = () => {
 			setCargando(true);
 			setError("");
 
-			const response = await loginService(email, password);
-			if (response.data.token) {
-				console.log(response.data);
-				dispatch(loguear(response.data));
+			const data = await loginService(email, password);
+			if (data.token) {
+				localStorage.setItem("token", data.token);
+				dispatch(loguear());
 				navigate("/dashboard");
 			} else {
 				setError("Credenciales incorrectas");
@@ -80,7 +80,7 @@ const Login = () => {
 				<Boton type="submit" id="login-btn" disabled={cargando}>
 					{cargando ? "Ingresando..." : "Iniciar sesión"}
 				</Boton>
-				
+
 				<div className="actions">
 					<Link to="/register" className="back-btn">Crear cuenta →</Link>
 				</div>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
-import { useId, useRef } from "react";
+import { useId, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Register = () => {
@@ -58,7 +58,7 @@ const Register = () => {
           />
         </div>
 
-        <div className="form-input">
+        <div className="form-group">
           <label htmlFor={idPassword}>Contraseña</label>
           <input type="password" id={idPassword} name="password" required=""
             autoComplete="current-password"
@@ -68,7 +68,7 @@ const Register = () => {
         </div>
 
         <div className="form-group">
-          <label htmlForr={idRepeatPassword}>Confirmar contraseña</label>
+          <label htmlFor={idRepeatPassword}>Confirmar contraseña</label>
           <input type="password" id={idRepeatPassword} name="confirmPassword"
             required autoComplete="new-password"
             placeholder="Repite tu contraseña"
@@ -84,7 +84,7 @@ const Register = () => {
         <Boton type="submit" id="register-btn" className="btn btn-muted" disabled={cargando}>
           {cargando ? "Ingresando..." : "Crear cuenta"}
         </Boton>
-        
+
         <div className="actions">
           <Link to="/login" className="back-btn">← Ya tengo cuenta</Link>
         </div>
