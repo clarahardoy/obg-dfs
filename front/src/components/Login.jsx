@@ -16,18 +16,25 @@ const Login = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { register, handleSubmit, formState: { errors } } = useForm({
-		resolver: joiResolver(loginValidator)
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors }
+	} = useForm({
+		resolver: joiResolver(loginValidator),
+		mode: "onChange",
+		defaultValues: { email: "", password: "" },
 	});
 
-	const onSubmit = async (data) => {
-		data.preventDefault();
-		console.log(data);
+	const email = watch("email");
+	const password = watch("password");
+	const canSubmit = Boolean(email?.trim() && password?.trim());
 
+	const onSubmit = async (values) => {
 		try {
 			setCargando(true);
-
-			const dataResponsive = await loginService(data.email, data.password);
+			const dataResponsive = await loginService(values.email, values.password);
 
 			if (dataResponsive?.token) {
 				localStorage.setItem("token", dataResponsive.token);
@@ -57,10 +64,11 @@ const Login = () => {
 						name="email"
 						autoComplete="username"
 						placeholder="Ingresa tu email"
+						aria-invalid={!!errors.email}
 						{...register("email")}
 					/>
 				</div>
-				<div className="mensaje-error" role="alert">{errors.password?.message}</div>
+				<div className="mensaje-error" role="alert">{errors.email?.message}</div>
 
 				<div className="form-group">
 					<label htmlFor={idPassword}>Contraseña</label>
@@ -71,12 +79,17 @@ const Login = () => {
 						required
 						autoComplete="current-password"
 						placeholder="Ingresa tu contraseña"
+						aria-invalid={!!errors.password}
 						{...register("password")}
 					/>
 				</div>
 				<div className="mensaje-error" role="alert">{errors.password?.message}</div>
 
-				<Boton type="submit" id="login-btn" disabled={!canSubmit}>
+				<Boton
+					type="submit"
+					id="login-btn"
+					disabled={!canSubmit || cargando}
+				>
 					{cargando ? "Ingresando..." : "Iniciar sesión"}
 				</Boton>
 
