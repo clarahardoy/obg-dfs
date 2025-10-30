@@ -8,12 +8,13 @@ import { loginService } from "../services/auth.service.js";
 import { loguear } from "../features/auth/auth.slice.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
+import Logo from "./Logo.jsx";
 
 const Login = () => {
 	const idEmail = useId();
 	const idPassword = useId();
 
-	const [cargando, setCargando] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Login = () => {
 
 	const onSubmit = async (values) => {
 		try {
-			setCargando(true);
+			setLoading(true);
 			const data = await loginService(values.email, values.password);
 
 			if (data?.token) {
@@ -49,13 +50,15 @@ const Login = () => {
 			const status = err?.response?.status;
 			console.log(status);
 		} finally {
-			setCargando(false);
+			setLoading(false);
 		}
 	};
 
 	return (
 		<div className="login-container">
 			<form id="login-form" autoComplete="off" onSubmit={handleSubmit(onSubmit)} noValidate>
+				<Logo className="logo-form" />
+
 				<MineTitle />
 
 				<div className="form-group">
@@ -90,9 +93,9 @@ const Login = () => {
 				<Boton
 					type="submit"
 					id="login-btn"
-					disabled={!canSubmit || cargando}
+					disabled={!canSubmit || loading}
 				>
-					{cargando ? "Ingresando..." : "Iniciar sesión"}
+					{loading ? "Ingresando..." : "Iniciar sesión"}
 				</Boton>
 
 				<div className="actions">

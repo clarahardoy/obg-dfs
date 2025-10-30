@@ -9,7 +9,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--rosado) 0%, var(--beige) 100%);
+    background-image:
+        url('/img/books_repeating_transparent.png'),
+        linear-gradient(135deg, var(--rosado) 0%, var(--beige) 100%);
+    background-repeat: repeat, no-repeat;
+    background-size: 280px, cover;
+    background-position: 0 0, center;
     padding: 120px 20px 40px;
 }
 
@@ -22,7 +27,7 @@
     min-width: 320px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 50px var(--rosado);
     transition: all 0.3s ease;
 }
 

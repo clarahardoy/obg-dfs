@@ -11,6 +11,14 @@
     margin-bottom: 1.5rem;
 }
 
+.logo-form{
+  display: block;
+  width: clamp(2.6rem, 4.8vw, 3.3rem);;
+  height: auto;
+  margin-block-end: clamp(24px, 5vh, 52px);
+  line-height: 0;
+}
+
 label {
     display: block;
     margin-bottom: 0.5rem;

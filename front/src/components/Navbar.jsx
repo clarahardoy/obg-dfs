@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { desloguear } from "../features/auth/auth.slice.js";
 import { useNavigate } from "react-router";
 import Boton from "./Boton.jsx";
+import Logo from "./Logo.jsx";
 import "../styles/navbar.css";
 
 const Navbar = () => {
@@ -23,6 +24,7 @@ const Navbar = () => {
         <header className="navbar" role="banner">
             <div className="navbar__inner">
                 <div className="navbar__side navbar__side--right">
+                    <Logo />
                     <span className="navbar__brand" aria-label="BookMemory">BookMemory</span>
                 </div>
 

@@ -8,6 +8,7 @@ import { loguear } from "../features/auth/auth.slice.js";
 import { registerValidator } from "../validators/auth.validators.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
+import Logo from "./Logo.jsx";
 
 const Register = () => {
   const idNombre = useId();
@@ -16,7 +17,7 @@ const Register = () => {
   const idPassword = useId();
   const idRepeatPassword = useId();
 
-  const [cargando, setCargando] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,11 +53,11 @@ const Register = () => {
     password?.trim() &&
     repeatPassword?.trim() &&
     password === repeatPassword
-  ) && !cargando;
+  ) && !loading;
 
   const onSubmit = async (values) => {
     try {
-      setCargando(true);
+      setLoading(true);
 
       const nuevoUsuario = {
         name: values.name.trim(),
@@ -82,14 +83,17 @@ const Register = () => {
       setValue("password", "");
       setValue("repeatPassword", "");
     } finally {
-      setCargando(false);
+      setLoading(false);
     }
   };
 
   return (
     <div className="register-container">
       <form id="register-form" autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Logo className="logo-form" />
+
         <MineTitle />
+        
         <p className="register-subtitle" role="doc-subtitle">
           Completá los datos y creá tu cuenta en <span className="brand">BookMemory</span>.
         </p>
@@ -135,7 +139,7 @@ const Register = () => {
           className="btn btn-muted"
           disabled={!canSubmit}
         >
-          {cargando ? "Creando cuenta..." : "Crear cuenta"}
+          {loading ? "Creando cuenta..." : "Crear cuenta"}
         </Boton>
 
         <div className="actions">
