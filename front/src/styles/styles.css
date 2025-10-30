@@ -59,7 +59,6 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
-/* MENSAJE DE ERROR*/
 .mensaje-error.visible {
 	display: block;
 }

@@ -1,69 +1,44 @@
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
 import { Link, useNavigate } from "react-router-dom";
-import { useId, useMemo, useState } from "react";
+import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
+import { loginValidator } from "../validators/auth.validators.js";
 import { loginService } from "../services/auth.service.js";
 import { loguear } from "../features/auth/auth.slice.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
 
-const INITIAL_FORM = { email: "", password: "" };
-
-function validate(form) {
-	const { email = "", password = "" } = form || {};
-	if (!email.trim() || !password) {
-		return { valid: false, reason: "Todos los campos son obligatorios" };
-	}
-	return { valid: true, reason: "" };
-}
-
 const Login = () => {
 	const idEmail = useId();
 	const idPassword = useId();
-
-	const [form, setForm] = useState(INITIAL_FORM);
-	const [error, setError] = useState("");
 	const [cargando, setCargando] = useState(false);
-
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const v = useMemo(() => validate(form), [form]);
-	const canSubmit = v.valid && !cargando;
+	const { register, handleSubmit, formState: { errors } } = useForm({
+		resolver: joiResolver(loginValidator)
+	});
 
-	const onChange = (e) => {
-		const { name, value } = e.target;
-		setForm((f) => ({ ...f, [name]: value }));
-		if (error) setError("");
-	};
-
-	const validarLogin = async (e) => {
-		e.preventDefault();
-
-		const check = validate(form);
-		if (!check.valid) {
-			setError(check.reason);
-			return;
-		}
+	const onSubmit = async (data) => {
+		data.preventDefault();
+		console.log(data);
 
 		try {
 			setCargando(true);
-			setError("");
 
-			const data = await loginService(form.email.trim(), form.password);
+			const dataResponsive = await loginService(data.email, data.password);
 
-			if (data?.token) {
-				localStorage.setItem("token", data.token);
-				if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+			if (dataResponsive?.token) {
+				localStorage.setItem("token", dataResponsive.token);
 				dispatch(loguear());
 				navigate("/dashboard");
 			} else {
-				setError("Credenciales incorrectas");
-				setForm(INITIAL_FORM);
+				console.log(errors);
 			}
 		} catch (err) {
 			const status = err?.response?.status;
-			setError(status >= 500 ? "No se pudo iniciar sesión. Intenta más tarde." : "Credenciales incorrectas");
-			setForm(INITIAL_FORM);
+			console.log(status);
 		} finally {
 			setCargando(false);
 		}
@@ -71,7 +46,7 @@ const Login = () => {
 
 	return (
 		<div className="login-container">
-			<form id="login-form" autoComplete="off" onSubmit={validarLogin} noValidate>
+			<form id="login-form" autoComplete="off" onSubmit={handleSubmit(onSubmit)} noValidate>
 				<MineTitle />
 
 				<div className="form-group">
@@ -80,13 +55,12 @@ const Login = () => {
 						type="email"
 						id={idEmail}
 						name="email"
-						required
 						autoComplete="username"
 						placeholder="Ingresa tu email"
-						value={form.email}
-						onChange={onChange}
+						{...register("email")}
 					/>
 				</div>
+				<div className="mensaje-error" role="alert">{errors.password?.message}</div>
 
 				<div className="form-group">
 					<label htmlFor={idPassword}>Contraseña</label>
@@ -97,12 +71,10 @@ const Login = () => {
 						required
 						autoComplete="current-password"
 						placeholder="Ingresa tu contraseña"
-						value={form.password}
-						onChange={onChange}
+						{...register("password")}
 					/>
 				</div>
-
-				{error && <div className="mensaje-error" role="alert">{error}</div>}
+				<div className="mensaje-error" role="alert">{errors.password?.message}</div>
 
 				<Boton type="submit" id="login-btn" disabled={!canSubmit}>
 					{cargando ? "Ingresando..." : "Iniciar sesión"}
