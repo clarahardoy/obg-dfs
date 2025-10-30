@@ -12,7 +12,9 @@ import Boton from "./Boton.jsx";
 const Login = () => {
 	const idEmail = useId();
 	const idPassword = useId();
+
 	const [cargando, setCargando] = useState(false);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -34,10 +36,10 @@ const Login = () => {
 	const onSubmit = async (values) => {
 		try {
 			setCargando(true);
-			const dataResponsive = await loginService(values.email, values.password);
+			const data = await loginService(values.email, values.password);
 
-			if (dataResponsive?.token) {
-				localStorage.setItem("token", dataResponsive.token);
+			if (data?.token) {
+				localStorage.setItem("token", data.token);
 				dispatch(loguear());
 				navigate("/dashboard");
 			} else {

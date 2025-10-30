@@ -1,36 +1,13 @@
-import { useId, useState, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
 import { Link, useNavigate } from "react-router-dom";
+import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerService } from "../services/auth.service.js";
 import { loguear } from "../features/auth/auth.slice.js";
+import { registerValidator } from "../validators/auth.validators.js";
 import MineTitle from "./MineTitle.jsx";
 import Boton from "./Boton.jsx";
-
-const INITIAL_FORM = {
-  name: "",
-  surname: "",
-  email: "",
-  password: "",
-  repeatPassword: "",
-};
-
-function validate(form) {
-  const {
-    name = "",
-    surname = "",
-    email = "",
-    password = "",
-    repeatPassword = "",
-  } = form || {};
-
-  if (!name.trim() || !surname.trim() || !email.trim() || !password || !repeatPassword) {
-    return { valid: false, reason: "Todos los campos son obligatorios" };
-  }
-  if (password !== repeatPassword) {
-    return { valid: false, reason: "Las contraseñas no coinciden" };
-  }
-  return { valid: true, reason: "" };
-}
 
 const Register = () => {
   const idNombre = useId();
@@ -39,43 +16,56 @@ const Register = () => {
   const idPassword = useId();
   const idRepeatPassword = useId();
 
-  const [form, setForm] = useState(INITIAL_FORM);
-  const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const v = useMemo(() => validate(form), [form]);
-  const canSubmit = v.valid && !cargando;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(registerValidator),
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
+  });
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    if (error) setError("");
-  };
+  const name = watch("name");
+  const surname = watch("surname");
+  const email = watch("email");
+  const password = watch("password");
+  const repeatPassword = watch("repeatPassword");
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const canSubmit = Boolean(
+    name?.trim() &&
+    surname?.trim() &&
+    email?.trim() &&
+    password?.trim() &&
+    repeatPassword?.trim() &&
+    password === repeatPassword
+  ) && !cargando;
 
-    const check = validate(form);
-    if (!check.valid) {
-      setError(check.reason);
-      return;
-    }
-
-    const nuevoUsuario = {
-      email: form.email.trim(),
-      password: form.password,
-      confirmPassword: form.repeatPassword,
-      name: form.name.trim(),
-      surname: form.surname.trim(),
-      role: "user",
-    };
-
+  const onSubmit = async (values) => {
     try {
       setCargando(true);
-      setError("");
+
+      const nuevoUsuario = {
+        name: values.name.trim(),
+        surname: values.surname.trim(),
+        email: values.email.trim(),
+        password: values.password,
+        confirmPassword: values.repeatPassword,
+        role: "user",
+      };
 
       const data = await registerService(nuevoUsuario);
 
@@ -85,12 +75,12 @@ const Register = () => {
         dispatch(loguear());
         navigate("/dashboard");
       } else {
-        setError(data?.error ?? "No se recibió token");
-        setForm((f) => ({ ...f, password: "", repeatPassword: "" }));
+        setValue("password", "");
+        setValue("repeatPassword", "");
       }
     } catch (err) {
-      setError(err?.response?.data?.message ?? "Ocurrió un error inesperado, intentá más tarde");
-      setForm((f) => ({ ...f, password: "", repeatPassword: "" }));
+      setValue("password", "");
+      setValue("repeatPassword", "");
     } finally {
       setCargando(false);
     }
@@ -98,7 +88,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <form id="register-form" autoComplete="off" noValidate onSubmit={onSubmit}>
+      <form id="register-form" autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
         <MineTitle />
         <p className="register-subtitle" role="doc-subtitle">
           Completá los datos y creá tu cuenta en <span className="brand">BookMemory</span>.
@@ -106,82 +96,45 @@ const Register = () => {
 
         <div className="form-group">
           <label htmlFor={idNombre}>Nombre</label>
-          <input
-            type="text"
-            id={idNombre}
-            name="name"
-            required
-            minLength={2}
-            maxLength={30}
-            placeholder="Ingresa tu nombre"
-            value={form.name}
-            onChange={onChange}
-          />
+          <input type="text" id={idNombre} placeholder="Ingresa tu nombre" autoComplete="given-name"
+            aria-invalid={!!errors.name} {...register("name")} />
+          <div className="mensaje-error" role="alert">{errors.name?.message}</div>
         </div>
 
         <div className="form-group">
           <label htmlFor={idApellido}>Apellido</label>
-          <input
-            type="text"
-            id={idApellido}
-            name="surname"
-            required
-            minLength={2}
-            maxLength={30}
-            placeholder="Ingresa tu apellido"
-            value={form.surname}
-            onChange={onChange}
-          />
+          <input type="text" id={idApellido} placeholder="Ingresa tu apellido" autoComplete="family-name"
+            aria-invalid={!!errors.surname} {...register("surname")} />
+          <div className="mensaje-error" role="alert">{errors.surname?.message}</div>
         </div>
 
         <div className="form-group">
           <label htmlFor={idEmail}>Email</label>
-          <input
-            type="email"
-            id={idEmail}
-            name="email"
-            required
-            autoComplete="email"
-            placeholder="Ingresa tu email"
-            value={form.email}
-            onChange={onChange}
-          />
+          <input type="email" id={idEmail} placeholder="Ingresa tu email" autoComplete="email"
+            aria-invalid={!!errors.email} {...register("email")} />
+          <div className="mensaje-error" role="alert">{errors.email?.message}</div>
         </div>
 
         <div className="form-group">
           <label htmlFor={idPassword}>Contraseña</label>
-          <input
-            type="password"
-            id={idPassword}
-            name="password"
-            required
-            autoComplete="new-password"
-            placeholder="Crea una contraseña"
-            value={form.password}
-            onChange={onChange}
-          />
+          <input type="password" id={idPassword} placeholder="Crea una contraseña" autoComplete="new-password"
+            aria-invalid={!!errors.password} {...register("password")} />
+          <div className="mensaje-error" role="alert">{errors.password?.message}</div>
         </div>
 
         <div className="form-group">
           <label htmlFor={idRepeatPassword}>Confirmar contraseña</label>
-          <input
-            type="password"
-            id={idRepeatPassword}
-            name="repeatPassword"
-            required
-            autoComplete="new-password"
-            placeholder="Repite tu contraseña"
-            value={form.repeatPassword}
-            onChange={onChange}
-          />
-          {form.password && form.repeatPassword && form.password !== form.repeatPassword && (
-            <div className="mensaje-error" role="alert">Las contraseñas no coinciden</div>
-          )}
+          <input type="password" id={idRepeatPassword} placeholder="Repite tu contraseña" autoComplete="new-password"
+            aria-invalid={!!errors.repeatPassword} {...register("repeatPassword")} />
+          <div className="mensaje-error" role="alert">{errors.repeatPassword?.message}</div>
         </div>
 
-        {error && <div className="mensaje-error" role="alert">{error}</div>}
-
-        <Boton type="submit" id="register-btn" className="btn btn-muted" disabled={!canSubmit}>
+        <Boton
+          type="submit"
+          id="register-btn"
+          className="btn btn-muted"
+          disabled={!canSubmit}
+        >
           {cargando ? "Creando cuenta..." : "Crear cuenta"}
         </Boton>
 
@@ -189,7 +142,7 @@ const Register = () => {
           <Link to="/login" className="back-btn">← Ya tengo cuenta</Link>
         </div>
       </form>
-    </div>
+    </div >
   );
 };
 

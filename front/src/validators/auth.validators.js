@@ -26,7 +26,10 @@ export const registerValidator = Joi.object({
         "string.empty": "El campo de Contraseña no puede estar vacío.",
         "any.required": "La Contraseña es obligatoria."
     }),
-    confirmPassword: Joi.ref('password'),
+    repeatPassword: Joi.any().valid(Joi.ref("password")).required().messages({
+        "any.only": "Las contraseñas no coinciden.",
+        "any.required": "Debes confirmar la contraseña."
+    }),
     name: Joi.string().min(2).max(30).messages({
         "string.base": "Debe ser un texto.",
         "string.empty": "El campo de Nombre no puede estar vacío.",
