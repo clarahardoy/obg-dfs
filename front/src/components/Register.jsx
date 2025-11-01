@@ -71,7 +71,6 @@ const Register = () => {
       const data = await registerService(nuevoUsuario);
 
       if (data?.token) {
-        localStorage.setItem("token", data.token);
         if (data.user) localStorage.setItem("token", data.token);
         dispatch(loguear());
         navigate("/dashboard");
