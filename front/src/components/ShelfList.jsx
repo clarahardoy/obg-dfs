@@ -1,53 +1,50 @@
 import { useDispatch } from 'react-redux';
 import { getUserShelves } from '../services/shelf.service';
-import { setShelves } from '../features/shelves/shelves.slice';
-import { useEffect } from 'react';
+import { setShelves } from '../features/shelves.slice';
+import { useSelector } from 'react-redux';
+import { useEffect, useCallback, useState } from 'react';
 import Shelf from './Shelf';
 import '../styles/shelf.css';
+import { toast } from 'react-toastify';
+import { LoaderCircle } from 'lucide-react';
 
-const MOCK_DATA = [
-	{
-		id: 1,
-		name: 'Estanteria 1',
-		readings: [
-			{ id: 1, title: 'Lectura 1', author: 'Autor 1' },
-			{ id: 2, title: 'Lectura 2', author: 'Autor 2' },
-			{ id: 3, title: 'Lectura 3', author: 'Autor 3' },
-		],
-	},
-	{
-		id: 2,
-		name: 'Estanteria 2',
-		readings: [{ id: 2, title: 'Lectura 2', author: 'Autor 2' }],
-	},
-	{
-		id: 3,
-		name: 'Estanteria 3',
-		readings: [{ id: 3, title: 'Lectura 3', author: 'Autor 3' }],
-	},
-];
 const ShelfList = () => {
 	const dispatch = useDispatch();
+	const [isLoadingShelves, setIsLoadingShelves] = useState(false);
 
-	useEffect(() => {
-		const fetchUserShelves = async () => {
+	const fetchUserShelves = useCallback(async () => {
+		try {
+			setIsLoadingShelves(true);
 			const userShelves = await getUserShelves();
 			dispatch(setShelves(userShelves));
-		};
-		fetchUserShelves();
+		} catch (error) {
+			console.error('Error loading shelves:', error);
+			toast.error('No se pudieron cargar las estanterías');
+		} finally {
+			setIsLoadingShelves(false);
+		}
 	}, [dispatch]);
 
-	// agarrar las shelves del store
-	//const shelves = useSelector((state) => state.shelves.shelves);
+	useEffect(() => {
+		fetchUserShelves();
+	}, [fetchUserShelves]);
+
+	const { shelves } = useSelector((state) => state.shelves);
 
 	return (
 		<div className='shelf-list'>
 			<h2 className='shelf-list-title'>Tus estanterías</h2>
-			<ul className='shelf-list-items'>
-				{MOCK_DATA.map((shelf) => (
-					<Shelf key={shelf.id} shelf={shelf} />
-				))}
-			</ul>
+			{isLoadingShelves ? (
+				<div className='shelf-loading'>
+					<LoaderCircle className='input-spinner' size={18} />
+				</div>
+			) : (
+				<ul className='shelf-list-items'>
+					{shelves.map((shelf) => (
+						<Shelf key={shelf._id} shelf={shelf} />
+					))}
+				</ul>
+			)}
 		</div>
 	);
 };

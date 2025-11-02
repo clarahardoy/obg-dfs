@@ -93,20 +93,27 @@
 	margin-bottom: 1.5rem;
 }
 
-.shelf-filters button:hover {
+.shelf-filters .btn-ghost:hover {
 	background-color: var(--beige);
 	color: var(--negro);
 	transition: background-color 0.2s, color 0.2s;
 }
 
-.shelf-filters button:active {
+.shelf-filters .btn-default {
 	background-color: var(--marronOscuro);
 	color: var(--blanco);
-	transition: background-color 0.2s, color 0.2s;
+}
+
+.shelf-filters .btn-default:hover {
+	background-color: var(--marronOscuro);
+	color: var(--blanco);
+	opacity: 0.9;
 }
 
 .shelf-readings {
 	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	gap: 1.5rem;
 }

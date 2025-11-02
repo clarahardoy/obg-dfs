@@ -3,7 +3,7 @@ import { apiClient } from './api-client';
 export const getUserShelves = async () => {
 	try {
 		const response = await apiClient.get('/shelves/my-shelves');
-		return response.data;
+		return response.data.shelves;
 	} catch (error) {
 		console.error('No se pudieron obtener las estanterías del usuario:', error);
 		throw error;
@@ -43,7 +43,7 @@ export const deleteShelf = async (id) => {
 export const getReadingsInShelf = async (id) => {
 	try {
 		const response = await apiClient.get(`/shelves/${id}/readings`);
-		return response.data;
+		return response.data.readings;
 	} catch (error) {
 		console.error(
 			'No se pudieron obtener las lecturas de la estantería:',
@@ -53,11 +53,12 @@ export const getReadingsInShelf = async (id) => {
 	}
 };
 
-export const addReadingToShelf = async (googleBooksId, shelfId) => {
+export const addReadingToShelf = async (googleBooksId, shelfId, status) => {
 	try {
 		const response = await apiClient.post(`/shelves/readings`, {
 			googleBooksId,
 			shelfId,
+			status,
 		});
 		return response.data;
 	} catch (error) {

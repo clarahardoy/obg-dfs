@@ -1,8 +1,10 @@
 import { apiClient } from './api-client';
 
-export const searchBooks = async () => {
+export const searchBooks = async (query) => {
 	try {
-		const response = await apiClient.get('/books/search');
+		const response = await apiClient.get('/books/search', {
+			params: { q: query },
+		});
 		return response.data;
 	} catch (error) {
 		console.error('No se pudieron obtener los libros:', error);
