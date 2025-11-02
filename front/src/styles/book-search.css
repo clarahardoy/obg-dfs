@@ -1,0 +1,182 @@
+.input-wrapper {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.input-icon {
+	position: absolute;
+	left: 0.75rem;
+}
+
+input.form-input-search {
+	padding-left: 2.5rem;
+}
+
+.search-results {
+	border: 1px solid var(--beige);
+	border-radius: 0.5rem;
+	max-height: 16rem;
+	overflow-y: auto;
+	background-color: var(--blanco);
+	width: 100%;
+}
+
+.search-result-item {
+	width: 100%;
+	padding: 0.75rem;
+	display: flex;
+	gap: 0.75rem;
+	align-items: flex-start;
+	border: none;
+	background: var(--blanco);
+	cursor: pointer;
+	transition: background-color 0.2s;
+	text-align: left;
+	border-bottom: 1px solid var(--beigeClaro);
+	font-family: inherit;
+}
+
+.search-result-item:last-child {
+	border-bottom: none;
+}
+
+.search-result-item:hover {
+	background-color: var(--beigeClaro);
+}
+
+.search-result-item:focus {
+	outline: none;
+	background-color: var(--beigeClaro);
+}
+
+.book-thumbnail {
+	width: 3rem;
+	height: 4rem;
+	object-fit: cover;
+	border-radius: 0.25rem;
+	flex-shrink: 0;
+}
+
+.book-icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	color: var(--grisOscuro);
+}
+
+.book-info {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.book-title {
+	font-weight: 500;
+	font-size: 0.875rem;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--negro);
+}
+
+.book-author {
+	font-size: 0.75rem;
+	color: var(--grisOscuro);
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.book-pages {
+	font-size: 0.75rem;
+	color: var(--grisOscuro);
+	margin: 0;
+}
+
+.search-results::-webkit-scrollbar {
+	width: 0.5rem;
+}
+
+.search-results::-webkit-scrollbar-track {
+	background: var(--beigeClaro);
+	border-radius: 0.25rem;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+	background: var(--beige);
+	border-radius: 0.25rem;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+	background: var(--marronClaro);
+}
+
+.selected-book-card {
+	border: 1px solid var(--beige);
+	border-radius: 0.5rem;
+	padding: 1rem;
+	background-color: var(--beigeClaro);
+}
+
+.selected-book-header {
+	display: flex;
+	gap: 0.75rem;
+	align-items: flex-start;
+}
+
+.selected-book-thumbnail {
+	width: 4rem;
+	height: 6rem;
+	object-fit: cover;
+	border-radius: 0.25rem;
+	flex-shrink: 0;
+}
+
+.selected-book-info {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.selected-book-title {
+	font-weight: 600;
+	font-size: 1rem;
+	margin: 0;
+	color: var(--negro);
+	line-height: 1.4;
+}
+
+.selected-book-author {
+	font-size: 0.875rem;
+	color: var(--grisOscuro);
+	margin: 0;
+}
+
+.selected-book-pages {
+	font-size: 0.875rem;
+	color: var(--grisOscuro);
+	margin: 0;
+}
+
+.input-spinner {
+	position: absolute;
+	right: 0.75rem;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

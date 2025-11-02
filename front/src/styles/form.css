@@ -1,159 +1,158 @@
 #login-form,
 #register-form {
-    display: grid;
-    justify-items: center;
+	display: grid;
+	justify-items: center;
 }
 
 .form-group {
-    width: 100%;
-    max-width: 360px;
-    margin-inline: auto;
-    margin-bottom: 1.5rem;
+	width: 100%;
+	max-width: 360px;
+	margin-inline: auto;
+	margin-bottom: 1.5rem;
 }
 
-.logo-form{
-  display: block;
-  width: clamp(2.6rem, 4.8vw, 3.3rem);;
-  height: auto;
-  margin-block-end: clamp(24px, 5vh, 52px);
-  line-height: 0;
+.logo-form {
+	display: block;
+	width: clamp(2.6rem, 4.8vw, 3.3rem);
+	height: auto;
+	margin-block-end: clamp(24px, 5vh, 52px);
+	line-height: 0;
 }
 
 label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--marronOscuro);
-    font-weight: 500;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    text-align: left;
+	display: block;
+	margin-bottom: 0.5rem;
+	color: var(--marronOscuro);
+	font-weight: 500;
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.9rem;
+	text-align: left;
 }
 
 /* INPUTS MAIL Y CONTRASEÑA */
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--marronOscuro);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--marronOscuro);
-    transition: all 0.3s ease;
-    font-family: 'Roboto', sans-serif;
+input[type='email'],
+input[type='password'],
+input[type='text'] {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--marronOscuro);
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	background: rgba(255, 255, 255, 0.05);
+	color: var(--marronOscuro);
+	transition: all 0.3s ease;
+	font-family: 'Roboto', sans-serif;
 }
 
-input[type="email"]::placeholder,
-input[type="password"]::placeholder,
-input[type="text"]::placeholder {
-    color: var(--rosado);
+input[type='email']::placeholder,
+input[type='password']::placeholder,
+input[type='text']::placeholder {
+	color: var(--rosado);
 }
 
 /* INPUTS MAIL Y CONTRASEÑA CON FOCO */
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus {
-    border-color: var(--marronOscuro);
-    outline: none;
-    background: var(--beigeClaro);
-    color: var(--rosado);
-    box-shadow: 0 0 0 3px rgba(115, 65, 36, 0.2);
+input[type='email']:focus,
+input[type='password']:focus,
+input[type='text']:focus {
+	border-color: var(--marronOscuro);
+	outline: none;
+	background: var(--beigeClaro);
+	color: var(--rosado);
+	box-shadow: 0 0 0 3px rgba(115, 65, 36, 0.2);
 }
 
-input[type="email"]:focus::placeholder,
-input[type="password"]:focus::placeholder,
-input[type="text"]:focus::placeholder {
-    color: var(--marronOscuro);
+input[type='email']:focus::placeholder,
+input[type='password']:focus::placeholder,
+input[type='text']:focus::placeholder {
+	color: var(--marronOscuro);
 }
 
 /* BOTON LOGIN */
-button[type="submit"] {
-    width: 100%;
-    max-width: 360px;
-    margin-inline: auto;
-    padding: 0.75rem 1rem;
-    background: var(--marronOscuro);
-    color: var(--beige);
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+button[type='submit'] {
+	width: 100%;
+	max-width: 360px;
+	margin-inline: auto;
+	padding: 0.75rem 1rem;
+	background: var(--marronOscuro);
+	color: var(--beige);
+	border: none;
+	border-radius: 0.5rem;
+	font-size: 1.1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	font-family: 'Oswald', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
 }
 
-button[type="submit"]:hover:not([disabled]) {
-    background: var(--rosado);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+button[type='submit']:hover:not([disabled]) {
+	background: var(--rosado);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
 }
 
 /* BOTON LOGIN DESACTIVADO HASTA QUE INGRESE MAIL Y CONTRASEÑA */
-button[type="submit"][disabled] {
-    background-color: #6c757d5b;
-    color: #d5d4d4;
-    /* background: rgba(255, 255, 255, 0.1);
+button[type='submit'][disabled] {
+	background-color: #6c757d5b;
+	color: #d5d4d4;
+	/* background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.5);*/
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
 }
 
 /* ACCIONES */
 .actions {
-    width: 100%;
-    max-width: 360px;
-    margin: 0.9rem auto 0;
-    display: flex;
-    justify-content: center;
+	width: 100%;
+	max-width: 360px;
+	margin: 0.9rem auto 0;
+	display: flex;
+	justify-content: center;
 }
 
 /* LINK VOLVER */
 .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    color: var(--marronOscuro);
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    opacity: 0.9;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px dashed var(--marronOscuro);
-    background: transparent;
-    transition: all 0.25s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	text-decoration: none;
+	color: var(--marronOscuro);
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.9rem;
+	opacity: 0.9;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.5rem;
+	border: 1px dashed var(--marronOscuro);
+	background: transparent;
+	transition: all 0.25s ease;
 }
 
 .back-btn:hover {
-    color: var(--rosado);
-    border: 1px dashed var(--rosado);
-    opacity: 1;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+	color: var(--rosado);
+	border: 1px dashed var(--rosado);
+	opacity: 1;
+	transform: translateY(-1px);
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
 /* RESPONSIVO */
 @media (max-width: 768px) {
+	.form-group,
+	.form-input {
+		margin-bottom: 1.2rem;
+	}
 
-    .form-group,
-    .form-input {
-        margin-bottom: 1.2rem;
-    }
+	input[type='email'],
+	input[type='password'],
+	input[type='text'] {
+		font-size: 0.95rem;
+		padding: 0.7rem 0.9rem;
+	}
 
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-        font-size: 0.95rem;
-        padding: 0.7rem 0.9rem;
-    }
-
-    button[type="submit"] {
-        font-size: 1rem;
-        padding: 0.7rem 0.9rem;
-    }
+	button[type='submit'] {
+		font-size: 1rem;
+		padding: 0.7rem 0.9rem;
+	}
 }
