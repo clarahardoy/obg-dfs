@@ -23,7 +23,7 @@ export const getReadingById = async (id) => {
 export const createReading = async (reading) => {
 	try {
 		const response = await apiClient.post('/readings', reading);
-		return response.data;
+		return response.data.newReading;
 	} catch (error) {
 		console.error('No se pudo crear la lectura:', error);
 		throw error;
@@ -32,7 +32,7 @@ export const createReading = async (reading) => {
 
 export const updateReadingById = async (id, reading) => {
 	try {
-		const response = await apiClient.put(`/readings/${id}`, reading);
+		const response = await apiClient.patch(`/readings/${id}`, reading);
 		return response.data;
 	} catch (error) {
 		console.error('No se pudo actualizar la lectura:', error);
