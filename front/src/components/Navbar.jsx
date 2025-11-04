@@ -11,12 +11,12 @@ const Navbar = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const cerrarSesionLogica = () => {
+	const onSubmit = () => {
 		try {
 			localStorage.clear();
 			dispatch(desloguear());
 			navigate('/');
-			toast.info("Sesión cerrada con éxito")
+			toast.success("Sesión cerrada con éxito")
 		} catch (err) {
 			console.error('Error al cerrar sesión:', err);
 		}
@@ -36,7 +36,7 @@ const Navbar = () => {
 					<Boton
 						id='logout-btn'
 						className='navbar__logout'
-						onClick={cerrarSesionLogica}
+						onClick={onSubmit}
 					>
 						Cerrar sesión
 					</Boton>
