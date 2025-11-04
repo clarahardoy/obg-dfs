@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link, useNavigate } from 'react-router-dom';
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginValidator } from '../validators/auth.validators.js';
 import { loginService } from '../services/auth.service.js';
-import { loguear } from '../features/auth.slice.js';
+import { desloguear, loguear } from '../features/auth.slice.js';
+import { toast } from 'react-toastify';
 import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
@@ -15,9 +16,18 @@ const Login = () => {
 	const idPassword = useId();
 
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const isToken = localStorage.getItem('token');
+
+		if (isToken) {
+			navigate('/dashboard');
+		}
+	}, []);
 
 	const {
 		register,
@@ -37,6 +47,7 @@ const Login = () => {
 	const onSubmit = async (values) => {
 		try {
 			setLoading(true);
+			setError("");
 			const data = await loginService(values.email, values.password);
 
 			if (data?.data.token) {
@@ -50,12 +61,13 @@ const Login = () => {
 					})
 				);
 				navigate('/dashboard');
+				toast.success("Sesión iniciada con éxito.")
 			} else {
 				console.log(errors);
 			}
 		} catch (err) {
-			const status = err?.response?.status;
-			console.log(status);
+			const msg = err?.response?.data?.error
+			setError(msg);
 		} finally {
 			setLoading(false);
 		}
@@ -105,7 +117,9 @@ const Login = () => {
 				<div className='mensaje-error' role='alert'>
 					{errors.password?.message}
 				</div>
-
+				<div className='mensaje-error' role='alert'>
+					<p>{error}</p>
+				</div>
 				<Boton type='submit' id='login-btn' disabled={!canSubmit || loading}>
 					{loading ? 'Ingresando...' : 'Iniciar sesión'}
 				</Boton>

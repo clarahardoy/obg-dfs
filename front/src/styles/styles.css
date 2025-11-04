@@ -49,18 +49,12 @@ body {
 	font-weight: 700;
 }
 
-/* MENSAJE DE ERROR*/
+/* ====== MENSAJES DE ERROR ====== */
 .mensaje-error {
 	color: #ff6b6b;
 	font-size: 0.85rem;
-	margin-top: 0.3rem;
-	min-height: 1.2em;
-	transition: opacity 0.2s;
+	line-height: 1.3;
 	font-family: 'Roboto', sans-serif;
-}
-
-.mensaje-error.visible {
-	display: block;
 }
 
 /* Para las toasts que notifican */

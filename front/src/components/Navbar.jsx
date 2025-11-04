@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
 import '../styles/navbar.css';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
 	const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Navbar = () => {
 			localStorage.clear();
 			dispatch(desloguear());
 			navigate('/');
+			toast.info("Sesión cerrada con éxito")
 		} catch (err) {
 			console.error('Error al cerrar sesión:', err);
 		}

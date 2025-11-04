@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { registerService } from '../services/auth.service.js';
 import { loguear } from '../features/auth.slice.js';
 import { registerValidator } from '../validators/auth.validators.js';
+import { toast } from 'react-toastify';
 import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
@@ -83,6 +84,7 @@ const Register = () => {
 					})
 				);
 				navigate('/dashboard');
+				toast.success("Cuenta registrada con éxito.")
 			} else {
 				setValue('password', '');
 				setValue('repeatPassword', '');
@@ -90,7 +92,6 @@ const Register = () => {
 		} catch (err) {
 			setValue('password', '');
 			setValue('repeatPassword', '');
-			console.error('No se pudo crear la cuenta:', err);
 		} finally {
 			setLoading(false);
 		}
