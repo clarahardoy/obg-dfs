@@ -20,6 +20,7 @@ const Register = () => {
 	const idRepeatPassword = useId();
 
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const Register = () => {
 	const onSubmit = async (values) => {
 		try {
 			setLoading(true);
+			setError("");
 
 			const nuevoUsuario = {
 				name: values.name.trim(),
@@ -91,8 +93,10 @@ const Register = () => {
 				setValue('repeatPassword', '');
 			}
 		} catch (err) {
+			const msg = err?.response?.data?.error
 			setValue('password', '');
 			setValue('repeatPassword', '');
+			setError(msg || '');
 		} finally {
 			setLoading(false);
 		}
@@ -128,9 +132,9 @@ const Register = () => {
 						aria-invalid={!!errors.name}
 						{...register('name')}
 					/>
-					<div className='mensaje-error' role='alert'>
-						{errors.name?.message}
-					</div>
+				</div>
+				<div className='mensaje-error' role='alert'>
+					{errors.name?.message}
 				</div>
 
 				<div className='form-group'>
@@ -143,9 +147,9 @@ const Register = () => {
 						aria-invalid={!!errors.surname}
 						{...register('surname')}
 					/>
-					<div className='mensaje-error' role='alert'>
-						{errors.surname?.message}
-					</div>
+				</div>
+				<div className='mensaje-error' role='alert'>
+					{errors.surname?.message}
 				</div>
 
 				<div className='form-group'>
@@ -158,9 +162,9 @@ const Register = () => {
 						aria-invalid={!!errors.email}
 						{...register('email')}
 					/>
-					<div className='mensaje-error' role='alert'>
-						{errors.email?.message}
-					</div>
+				</div>
+				<div className='mensaje-error' role='alert'>
+					{errors.email?.message}
 				</div>
 
 				<div className='form-group'>
@@ -173,9 +177,9 @@ const Register = () => {
 						aria-invalid={!!errors.password}
 						{...register('password')}
 					/>
-					<div className='mensaje-error' role='alert'>
-						{errors.password?.message}
-					</div>
+				</div>
+				<div className='mensaje-error' role='alert'>
+					{errors.password?.message}
 				</div>
 
 				<div className='form-group'>
@@ -188,11 +192,13 @@ const Register = () => {
 						aria-invalid={!!errors.repeatPassword}
 						{...register('repeatPassword')}
 					/>
-					<div className='mensaje-error' role='alert'>
-						{errors.repeatPassword?.message}
-					</div>
 				</div>
-
+				<div className='mensaje-error' role='alert'>
+					{errors.repeatPassword?.message}
+				</div>
+				<div className='mensaje-error' role='alert'>
+					<p>{error}</p>
+				</div>
 				<Boton
 					type='submit'
 					id='register-btn'

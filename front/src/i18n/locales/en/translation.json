@@ -10,24 +10,24 @@
         "toastSuccess": "Signed in successfully."
     },
     "register": {
-        "subtitle": "Completá los datos y creá tu cuenta en <brand>{{brand}}</brand>.",
-        "nameLabel": "Nombre",
-        "surnameLabel": "Apellido",
+        "subtitle": "Fill in your details to create your account at <brand>{{brand}}</brand>.",
+        "nameLabel": "First name",
+        "surnameLabel": "Last name",
         "emailLabel": "Email",
-        "passwordLabel": "Contraseña",
-        "repeatPasswordLabel": "Confirmar contraseña",
-        "placeholderName": "Ingresa tu nombre",
-        "placeholderSurname": "Ingresa tu apellido",
-        "placeholderEmail": "Ingresa tu email",
-        "placeholderPasswordCreate": "Crea una contraseña",
-        "placeholderPasswordRepeat": "Repite tu contraseña",
-        "btnCreateAccount": "Crear cuenta",
-        "btnCreatingAccount": "Creando cuenta...",
-        "linkHaveAccount": "← Ya tengo cuenta",
-        "toastSuccess": "Cuenta registrada con éxito."
+        "passwordLabel": "Password",
+        "repeatPasswordLabel": "Confirm password",
+        "placeholderName": "Enter your first name",
+        "placeholderSurname": "Enter your last name",
+        "placeholderEmail": "Enter your email",
+        "placeholderPasswordCreate": "Create a password",
+        "placeholderPasswordRepeat": "Repeat your password",
+        "btnCreateAccount": "Create account",
+        "btnCreatingAccount": "Creating account...",
+        "linkHaveAccount": "← I already have an account",
+        "toastSuccess": "Account created successfully."
     },
     "navbar":{
-        "btnLogout": "Cerrar sesión"
+        "btnLogout": "Logout"
     },
     "dashboard": {
         "dashboardTitle": "Mi Library"
