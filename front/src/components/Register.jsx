@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
+import { Trans, useTranslation } from 'react-i18next';
 
 const Register = () => {
 	const idNombre = useId();
@@ -22,7 +23,7 @@ const Register = () => {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
@@ -50,11 +51,11 @@ const Register = () => {
 	const canSubmit =
 		Boolean(
 			name?.trim() &&
-				surname?.trim() &&
-				email?.trim() &&
-				password?.trim() &&
-				repeatPassword?.trim() &&
-				password === repeatPassword
+			surname?.trim() &&
+			email?.trim() &&
+			password?.trim() &&
+			repeatPassword?.trim() &&
+			password === repeatPassword
 		) && !loading;
 
 	const onSubmit = async (values) => {
@@ -110,16 +111,19 @@ const Register = () => {
 				<MineTitle />
 
 				<p className='register-subtitle' role='doc-subtitle'>
-					Completá los datos y creá tu cuenta en{' '}
-					<span className='brand'>BookMemory</span>.
+					<Trans
+						i18nKey="register.subtitle"
+						components={{ brand: <span className="brand" /> }}
+						values={{ brand: 'BookMemory' }}
+					/>
 				</p>
 
 				<div className='form-group'>
-					<label htmlFor={idNombre}>Nombre</label>
+					<label htmlFor={idNombre}>{t('register.nameLabel')}</label>
 					<input
 						type='text'
 						id={idNombre}
-						placeholder='Ingresa tu nombre'
+						placeholder={t('register.placeholderName')}
 						autoComplete='given-name'
 						aria-invalid={!!errors.name}
 						{...register('name')}
@@ -130,11 +134,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idApellido}>Apellido</label>
+					<label htmlFor={idApellido}>{t('register.surnameLabel')}</label>
 					<input
 						type='text'
 						id={idApellido}
-						placeholder='Ingresa tu apellido'
+						placeholder={t('register.placeholderSurname')}
 						autoComplete='family-name'
 						aria-invalid={!!errors.surname}
 						{...register('surname')}
@@ -145,11 +149,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idEmail}>Email</label>
+					<label htmlFor={idEmail}>{t('register.emailLabel')}</label>
 					<input
 						type='email'
 						id={idEmail}
-						placeholder='Ingresa tu email'
+						placeholder={t('register.placeholderEmail')}
 						autoComplete='email'
 						aria-invalid={!!errors.email}
 						{...register('email')}
@@ -160,11 +164,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idPassword}>Contraseña</label>
+					<label htmlFor={idPassword}>{t('register.passwordLabel')}</label>
 					<input
 						type='password'
 						id={idPassword}
-						placeholder='Crea una contraseña'
+						placeholder={t('register.placeholderPasswordCreate')}
 						autoComplete='new-password'
 						aria-invalid={!!errors.password}
 						{...register('password')}
@@ -175,11 +179,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idRepeatPassword}>Confirmar contraseña</label>
+					<label htmlFor={idRepeatPassword}>{t('register.repeatPasswordLabel')}</label>
 					<input
 						type='password'
 						id={idRepeatPassword}
-						placeholder='Repite tu contraseña'
+						placeholder={t('register.placeholderPasswordRepeat')}
 						autoComplete='new-password'
 						aria-invalid={!!errors.repeatPassword}
 						{...register('repeatPassword')}
@@ -195,12 +199,12 @@ const Register = () => {
 					className='btn btn-muted'
 					disabled={!canSubmit}
 				>
-					{loading ? 'Creando cuenta...' : 'Crear cuenta'}
+					{loading ? t('register.btnCreatingAccount') : t('register.btnCreateAccount')}
 				</Boton>
 
 				<div className='actions'>
 					<Link to='/login' className='back-btn'>
-						← Ya tengo cuenta
+						{t('register.linkHaveAccount')}
 					</Link>
 				</div>
 			</form>

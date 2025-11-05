@@ -5,11 +5,12 @@ import { useEffect, useId, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginValidator } from '../validators/auth.validators.js';
 import { loginService } from '../services/auth.service.js';
-import { desloguear, loguear } from '../features/auth.slice.js';
+import { loguear } from '../features/auth.slice.js';
 import { toast } from 'react-toastify';
 import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
 	const idEmail = useId();
@@ -17,16 +18,14 @@ const Login = () => {
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+	const { t } = useTranslation();
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const isToken = localStorage.getItem('token');
-
-		if (isToken) {
-			navigate('/dashboard');
-		}
+		if (isToken) navigate('/dashboard');
 	}, []);
 
 	const {
@@ -62,12 +61,10 @@ const Login = () => {
 				);
 				navigate('/dashboard');
 				toast.success("Sesión iniciada con éxito.")
-			} else {
-				console.log(errors);
 			}
 		} catch (err) {
 			const msg = err?.response?.data?.error
-			setError(msg);
+			setError(msg || '');
 		} finally {
 			setLoading(false);
 		}
@@ -86,13 +83,13 @@ const Login = () => {
 				<MineTitle />
 
 				<div className='form-group'>
-					<label htmlFor={idEmail}>Email</label>
+					<label htmlFor={idEmail}>{t('login.emailLabel')}</label>
 					<input
 						type='email'
 						id={idEmail}
 						name='email'
 						autoComplete='username'
-						placeholder='Ingresa tu email'
+						placeholder={t('login.placeholderEmail')}
 						aria-invalid={!!errors.email}
 						{...register('email')}
 					/>
@@ -102,14 +99,14 @@ const Login = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idPassword}>Contraseña</label>
+					<label htmlFor={idPassword}>{t('login.passwordLabel')}</label>
 					<input
 						type='password'
 						id={idPassword}
 						name='password'
 						required
 						autoComplete='current-password'
-						placeholder='Ingresa tu contraseña'
+						placeholder={t('login.placeholderPassword')}
 						aria-invalid={!!errors.password}
 						{...register('password')}
 					/>
@@ -117,16 +114,18 @@ const Login = () => {
 				<div className='mensaje-error' role='alert'>
 					{errors.password?.message}
 				</div>
+
 				<div className='mensaje-error' role='alert'>
 					<p>{error}</p>
 				</div>
+
 				<Boton type='submit' id='login-btn' disabled={!canSubmit || loading}>
-					{loading ? 'Ingresando...' : 'Iniciar sesión'}
+					{loading ? t('login.btnLoggingIn') : t('login.btnLogin')}
 				</Boton>
 
 				<div className='actions'>
 					<Link to='/register' className='back-btn'>
-						Crear cuenta →
+						{t('login.btnCreateAccount')}
 					</Link>
 				</div>
 			</form>

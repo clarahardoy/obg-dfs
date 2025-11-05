@@ -6,10 +6,12 @@ import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
 import '../styles/navbar.css';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { t, i18n } = useTranslation();
 
 	const onSubmit = () => {
 		try {
@@ -22,6 +24,11 @@ const Navbar = () => {
 		}
 	};
 
+	const changeLanguage = e => {
+		const language = e.target.value;
+		i18n.changeLanguage(language);
+	};
+
 	return (
 		<header className='navbar' role='banner'>
 			<div className='navbar__inner'>
@@ -32,13 +39,19 @@ const Navbar = () => {
 					</span>
 				</div>
 
+				<div>
+					<select value={i18n.language} onChange={changeLanguage}>
+						<option value="es">ES</option>
+						<option value="en">EN</option>
+					</select>
+				</div>
 				<div className='navbar__side navbar__side--left'>
 					<Boton
 						id='logout-btn'
 						className='navbar__logout'
 						onClick={onSubmit}
 					>
-						Cerrar sesión
+						{t('navbar.btnLogout')}
 					</Boton>
 				</div>
 			</div>

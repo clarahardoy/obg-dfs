@@ -1,0 +1,35 @@
+{
+    "login": {
+        "emailLabel": "Email",
+        "passwordLabel": "Password",
+        "placeholderEmail": "Enter your email",
+        "placeholderPassword": "Enter your password",
+        "btnLogin": "Sign in",
+        "btnLoggingIn": "Signing in...",
+        "btnCreateAccount": "Create account →",
+        "toastSuccess": "Signed in successfully."
+    },
+    "register": {
+        "subtitle": "Completá los datos y creá tu cuenta en <brand>{{brand}}</brand>.",
+        "nameLabel": "Nombre",
+        "surnameLabel": "Apellido",
+        "emailLabel": "Email",
+        "passwordLabel": "Contraseña",
+        "repeatPasswordLabel": "Confirmar contraseña",
+        "placeholderName": "Ingresa tu nombre",
+        "placeholderSurname": "Ingresa tu apellido",
+        "placeholderEmail": "Ingresa tu email",
+        "placeholderPasswordCreate": "Crea una contraseña",
+        "placeholderPasswordRepeat": "Repite tu contraseña",
+        "btnCreateAccount": "Crear cuenta",
+        "btnCreatingAccount": "Creando cuenta...",
+        "linkHaveAccount": "← Ya tengo cuenta",
+        "toastSuccess": "Cuenta registrada con éxito."
+    },
+    "navbar":{
+        "btnLogout": "Cerrar sesión"
+    },
+    "dashboard": {
+        "dashboardTitle": "Mi Library"
+    }
+}

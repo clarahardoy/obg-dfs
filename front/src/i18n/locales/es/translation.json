@@ -1,0 +1,35 @@
+{
+    "login": {
+        "emailLabel": "Email",
+        "passwordLabel": "Contraseña",
+        "placeholderEmail": "Ingresa tu email",
+        "placeholderPassword": "Ingresa tu contraseña",
+        "btnLogin": "Iniciar sesión",
+        "btnLoggingIn": "Ingresando...",
+        "btnCreateAccount": "Crear cuenta →",
+        "toastSuccess": "Sesión iniciada con éxito."
+    },
+    "register": {
+        "subtitle": "Fill in your details to create your account at <brand>{{brand}}</brand>.",
+        "nameLabel": "First name",
+        "surnameLabel": "Last name",
+        "emailLabel": "Email",
+        "passwordLabel": "Password",
+        "repeatPasswordLabel": "Confirm password",
+        "placeholderName": "Enter your first name",
+        "placeholderSurname": "Enter your last name",
+        "placeholderEmail": "Enter your email",
+        "placeholderPasswordCreate": "Create a password",
+        "placeholderPasswordRepeat": "Repeat your password",
+        "btnCreateAccount": "Create account",
+        "btnCreatingAccount": "Creating account...",
+        "linkHaveAccount": "← I already have an account",
+        "toastSuccess": "Account created successfully."
+    },
+    "navbar":{
+        "btnLogout": "Logout"
+    },
+    "dashboard": {
+        "dashboardTitle": "Mi Biblioteca"
+    }
+}
