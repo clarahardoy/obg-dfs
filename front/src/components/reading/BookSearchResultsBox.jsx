@@ -1,14 +1,15 @@
-import React from 'react';
 import '../../styles/book-search.css';
 import { Book } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const BookSearchResultsBox = ({ results, onBookSelect }) => {
+	const { t } = useTranslation();
 	const handleBookSelect = (book) => {
 		onBookSelect(book);
 	};
 	return (
 		<div className='form-group'>
-			<label className='form-label'>Resultados</label>
+			<label className='form-label'>{t('bookSearch.resultsLabel')}</label>
 			<div className='search-results'>
 				{results.map((book) => (
 					<button
@@ -32,7 +33,9 @@ export const BookSearchResultsBox = ({ results, onBookSelect }) => {
 								{book.author || 'Autor desconocido'}
 							</p>
 							{book.pages > 0 && (
-								<p className='book-pages'>{book.pages} páginas </p>
+								<p className='book-pages'>
+									{book.pages} {t('common.units.pages', { count: book.pages })}
+								</p>
 							)}
 						</div>
 					</button>

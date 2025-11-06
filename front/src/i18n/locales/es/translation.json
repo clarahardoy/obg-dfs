@@ -1,35 +1,111 @@
 {
     "login": {
-        "emailLabel": "Email",
-        "passwordLabel": "Contraseña",
-        "placeholderEmail": "Ingresa tu email",
-        "placeholderPassword": "Ingresa tu contraseña",
         "btnLogin": "Iniciar sesión",
         "btnLoggingIn": "Ingresando...",
-        "btnCreateAccount": "Crear cuenta →",
-        "toastSuccess": "Sesión iniciada con éxito."
+        "toastSuccess": "Sesión iniciada con éxito.",
+        "toastGenericError": "No pudimos iniciar sesión. Inténtalo de nuevo.",
+        "toastSessionExpired": "Tu sesión expiró. Vuelve a iniciar sesión.",
+        "toastLoggedOut": "Cerraste sesión correctamente."
     },
     "register": {
         "subtitle": "Completá los datos y creá tu cuenta en <brand>{{brand}}</brand>.",
         "nameLabel": "Nombre",
         "surnameLabel": "Apellido",
-        "emailLabel": "Email",
-        "passwordLabel": "Contraseña",
         "repeatPasswordLabel": "Confirmar contraseña",
         "placeholderName": "Ingresa tu nombre",
         "placeholderSurname": "Ingresa tu apellido",
-        "placeholderEmail": "Ingresa tu email",
         "placeholderPasswordCreate": "Crea una contraseña",
         "placeholderPasswordRepeat": "Repite tu contraseña",
-        "btnCreateAccount": "Crear cuenta",
         "btnCreatingAccount": "Creando cuenta...",
-        "linkHaveAccount": "← Ya tengo cuenta",
-        "toastSuccess": "Cuenta registrada con éxito."
-    },
-    "navbar":{
-        "btnLogout": "Cerrar sesión"
+        "linkHaveAccount": "Ya tengo cuenta",
+        "toastSuccess": "Cuenta registrada con éxito.",
+        "toastGenericError": "No pudimos crear la cuenta. Inténtalo de nuevo."
     },
     "dashboard": {
         "dashboardTitle": "Mi Biblioteca"
+    },
+    "shelves": {
+        "title": "Tus estanterías",
+        "toastLoadError": "No pudimos cargar tus estanterías. Inténtalo de nuevo."
+    },
+    "shelf": {
+        "btnAddReading": "Agregar lectura",
+        "filters": {
+            "showAll": "Ver todos",
+            "finishedLastWeek": "Terminados (Última semana)",
+            "finishedLastMonth": "Terminados (Último mes)",
+            "finishedAllTime": "Terminados (Histórico)"
+        },
+        "empty": {
+            "noReadings": "Actualmente no tienes ninguna lectura."
+        },
+        "toastAddSuccess": "Lectura agregada correctamente.",
+        "toastAddError": "No se pudo agregar la lectura.",
+        "toastMaxReached": "Has alcanzado el límite de lecturas permitidas. Pasate a Premium para agregar más lecturas."
+    },
+    "reading": {
+        "toastUpdateSuccess": "Lectura actualizada correctamente.",
+        "toastUpdateErrorGeneric": "No se pudo actualizar la lectura.",
+        "toastDeleteSuccess": "Lectura eliminada correctamente.",
+        "toastDeleteErrorGeneric": "No se pudo eliminar la lectura.",
+        "modalDelete": {
+            "title": "¿Estás seguro de querer eliminar esta lectura?",
+            "description": "Esta acción no se puede deshacer.",
+            "confirm": "Eliminar",
+            "cancel": "Cancelar"
+        },
+        "modalEdit": {
+            "title": "Actualizar lectura",
+            "confirm": "Guardar cambios",
+            "cancel": "Cancelar"
+        }
+    },
+    "readingForm": {
+        "labels": {
+            "status": "Estado de lectura",
+            "currentPage": "Página actual",
+            "startDateOptional": "Fecha de inicio (opcional)",
+            "finishDate": "Fecha de finalización"
+        },
+        "status": {
+            "WANT_TO_READ": "Por leer",
+            "CURRENTLY_READING": "Leyendo",
+            "FINISHED": "Completado",
+            "ABANDONED": "Abandonado"
+        }
+    },
+    "bookSearch": {
+        "resultsLabel": "Resultados",
+        "placeholderSearch": "Buscar por título, autor..."
+    },
+    "addReading": {
+        "title": "Agregar lectura",
+        "description": "Buscá un libro y agregá su información de lectura"
+    },
+    "common": {
+        "form": {
+            "emailLabel": "Email",
+            "passwordLabel": "Contraseña",
+            "placeholderEmail": "Ingresa tu email",
+            "placeholderPassword": "Ingresa tu contraseña"
+        },
+        "actions": {
+            "createAccount": "Crear cuenta",
+            "change": "Cambiar",
+            "cancel": "Cancelar",
+            "delete": "Eliminar",
+            "saveChanges": "Guardar cambios",
+            "logout": "Cerrar sesión"
+        },
+        "labels": {
+            "unknownAuthor": "Autor desconocido"
+        },
+        "units": {
+            "pages_one": "página",
+            "pages_other": "páginas"
+        },
+        "confirmations": {
+            "irreversibleAction": "Esta acción no se puede deshacer."
+        }
     }
 }

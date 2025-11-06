@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import '../../styles/reading.css';
 import { ReadingStatus } from '../../utils/reading-status';
+import { useTranslation } from 'react-i18next';
 
 export const ReadingForm = ({
 	status,
@@ -13,6 +14,7 @@ export const ReadingForm = ({
 	setFinishedReading,
 	maxPages,
 }) => {
+	const { t } = useTranslation();
 	const showStartDate =
 		status === ReadingStatus.CURRENTLY_READING ||
 		status === ReadingStatus.FINISHED;
@@ -35,7 +37,7 @@ export const ReadingForm = ({
 		<div className='reading-form'>
 			<div className='form-group'>
 				<label htmlFor='status' className='form-label'>
-					Estado de lectura
+					{t('readingForm.labels.status')}
 				</label>
 				<select
 					id='status'
@@ -43,23 +45,30 @@ export const ReadingForm = ({
 					value={status}
 					onChange={(e) => setStatus(e.target.value)}
 				>
-					<option value={ReadingStatus.WANT_TO_READ}>Por leer</option>
-					<option value={ReadingStatus.CURRENTLY_READING}>Leyendo</option>
-					<option value={ReadingStatus.FINISHED}>Completado</option>
-					<option value={ReadingStatus.ABANDONED}>Abandonado</option>
+					<option value={ReadingStatus.WANT_TO_READ}>
+						{t('readingForm.status.WANT_TO_READ')}
+					</option>
+					<option value={ReadingStatus.CURRENTLY_READING}>
+						{t('readingForm.status.CURRENTLY_READING')}
+					</option>
+					<option value={ReadingStatus.FINISHED}>
+						{t('readingForm.status.FINISHED')}
+					</option>
+					<option value={ReadingStatus.ABANDONED}>
+						{t('readingForm.status.ABANDONED')}
+					</option>
 				</select>
 			</div>
 
 			<div className='form-group'>
 				<label htmlFor='currentPage' className='form-label'>
-					Página actual
+					{t('readingForm.labels.currentPage')}
 				</label>
 				<input
 					id='currentPage'
 					type='number'
-					className={`form-input ${
-						isPageInputDisabled ? 'form-input-disabled' : ''
-					}`}
+					className={`form-input ${isPageInputDisabled ? 'form-input-disabled' : ''
+						}`}
 					min='0'
 					max={maxPages}
 					value={currentPage}
@@ -73,7 +82,7 @@ export const ReadingForm = ({
 			{showStartDate && (
 				<div className='form-group'>
 					<label htmlFor='startedReading' className='form-label'>
-						Fecha de inicio (opcional)
+						{t('readingForm.labels.startDateOptional')}
 					</label>
 					<input
 						id='startedReading'
@@ -89,7 +98,7 @@ export const ReadingForm = ({
 			{showFinishDate && (
 				<div className='form-group'>
 					<label htmlFor='finishedReading' className='form-label'>
-						Fecha de finalización
+						{t('readingForm.labels.finishDate')}
 					</label>
 					<input
 						id='finishedReading'

@@ -1,4 +1,3 @@
-// Navbar.jsx
 import { useDispatch } from 'react-redux';
 import { desloguear } from '../features/auth.slice.js';
 import { useNavigate } from 'react-router';
@@ -18,9 +17,9 @@ const Navbar = () => {
 			localStorage.clear();
 			dispatch(desloguear());
 			navigate('/');
-			toast.success("Sesión cerrada con éxito")
+			toast.success((t('login.toastLoggedOut')));
 		} catch (err) {
-			console.error('Error al cerrar sesión:', err);
+			console.log(err?.response?.data?.message);
 		}
 	};
 
@@ -51,7 +50,7 @@ const Navbar = () => {
 						className='navbar__logout'
 						onClick={onSubmit}
 					>
-						{t('navbar.btnLogout')}
+						{t('common.actions.logout')}
 					</Boton>
 				</div>
 			</div>

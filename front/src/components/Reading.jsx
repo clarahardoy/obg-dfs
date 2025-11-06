@@ -19,8 +19,10 @@ import { calculateProgress } from '../utils/calculate-progress';
 import { getStatusLabel, ReadingStatus } from '../utils/reading-status';
 import { filterReadingsByDate } from '../utils/reading-filter';
 import { formatDateForInput } from '../utils/format-date';
+import { useTranslation } from 'react-i18next';
 
 const Reading = ({ reading }) => {
+	const { t } = useTranslation();
 	const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
 		useState(false);
 	const [isEditReadingOpen, setIsEditReadingOpen] = useState(false);
@@ -92,10 +94,10 @@ const Reading = ({ reading }) => {
 			);
 
 			setIsEditReadingOpen(false);
-			toast.success('Lectura actualizada correctamente');
+			toast.success(t('reading.toastUpdateSuccess'));
 		} catch (error) {
 			const errorMessage =
-				error?.response?.data?.error || 'No se pudo actualizar la lectura';
+				error?.response?.data?.error || t('reading.toastUpdateErrorGeneric');
 			toast.error(errorMessage);
 			console.error('No se pudo actualizar la lectura:', error);
 		}
@@ -104,7 +106,7 @@ const Reading = ({ reading }) => {
 	const handleDeleteReading = async () => {
 		try {
 			await deleteReadingById(reading._id);
-			toast.success('Lectura eliminada correctamente');
+			toast.success(t('reading.toastDeleteSuccess'));
 			dispatch(
 				deleteReadingFromShelf({
 					shelfId: reading.shelfId,
@@ -115,7 +117,7 @@ const Reading = ({ reading }) => {
 			const errorMessage =
 				error?.response?.data?.error ||
 				error?.message ||
-				'No se pudo eliminar la lectura';
+				t('reading.toastDeleteErrorGeneric');
 			toast.error(errorMessage);
 			console.error('No se pudo eliminar la lectura:', error);
 		}
@@ -181,18 +183,18 @@ const Reading = ({ reading }) => {
 				isOpen={isDeleteConfirmationOpen}
 				onClose={() => setIsDeleteConfirmationOpen(false)}
 				onConfirm={handleDeleteReading}
-				title='¿Estás seguro de querer eliminar esta lectura?'
-				description='Esta acción no se puede deshacer.'
-				confirmText='Eliminar'
-				cancelText='Cancelar'
+				title={t('reading.modalDelete.title')}
+				description={t('reading.modalDelete.description')}
+				confirmText={t('reading.modalDelete.confirm')}
+				cancelText={t('reading.modalDelete.cancel')}
 			/>
 			<ModalConfirmacion
 				isOpen={isEditReadingOpen}
 				onClose={() => setIsEditReadingOpen(false)}
 				onConfirm={handleEditReading}
-				title='Actualizar lectura'
-				confirmText='Guardar cambios'
-				cancelText='Cancelar'
+				title={t('reading.modalEdit.title')}
+				confirmText={t('reading.modalEdit.confirm')}
+				cancelText={t('reading.modalEdit.cancel')}
 				className='modal-container-column'
 				isDisabled={
 					readingStatus === ReadingStatus.FINISHED && !finishedReading

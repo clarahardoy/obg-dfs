@@ -60,10 +60,10 @@ const Login = () => {
 					})
 				);
 				navigate('/dashboard');
-				toast.success("Sesión iniciada con éxito.")
+				toast.success((t('login.toastSuccess')))
 			}
 		} catch (err) {
-			const msg = err?.response?.data?.error
+			const msg = err?.response?.data?.message
 			setError(msg || '');
 		} finally {
 			setLoading(false);
@@ -83,13 +83,13 @@ const Login = () => {
 				<MineTitle />
 
 				<div className='form-group'>
-					<label htmlFor={idEmail}>{t('login.emailLabel')}</label>
+					<label htmlFor={idEmail}>{t('common.form.emailLabel')}</label>
 					<input
 						type='email'
 						id={idEmail}
 						name='email'
 						autoComplete='username'
-						placeholder={t('login.placeholderEmail')}
+						placeholder={t('common.form.placeholderEmail')}
 						aria-invalid={!!errors.email}
 						{...register('email')}
 					/>
@@ -99,14 +99,14 @@ const Login = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idPassword}>{t('login.passwordLabel')}</label>
+					<label htmlFor={idPassword}>{t('common.form.passwordLabel')}</label>
 					<input
 						type='password'
 						id={idPassword}
 						name='password'
 						required
 						autoComplete='current-password'
-						placeholder={t('login.placeholderPassword')}
+						placeholder={t('common.form.placeholderPassword')}
 						aria-invalid={!!errors.password}
 						{...register('password')}
 					/>
@@ -125,7 +125,7 @@ const Login = () => {
 
 				<div className='actions'>
 					<Link to='/register' className='back-btn'>
-						{t('login.btnCreateAccount')}
+						{t('common.actions.createAccount') + ' →'}
 					</Link>
 				</div>
 			</form>

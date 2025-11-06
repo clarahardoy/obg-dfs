@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { searchBooks } from '../../services/book.service';
 import { BookSearchResultsBox } from './BookSearchResultsBox';
 import '../../styles/book-search.css';
 import '../../styles/modal.css';
 import { LoaderCircle } from 'lucide-react';
 import { Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const BookSearch = ({ onBookSelect, selectedBook }) => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [isSearching, setIsSearching] = useState(false);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		if (!searchQuery.trim()) {
@@ -43,7 +45,7 @@ export const BookSearch = ({ onBookSelect, selectedBook }) => {
 							id='search'
 							type='text'
 							className='form-input form-input-search'
-							placeholder='Buscar por título, autor...'
+							placeholder={t('bookSearch.placeholderSearch')}
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 						/>

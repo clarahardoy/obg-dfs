@@ -7,9 +7,11 @@ import Shelf from './Shelf';
 import '../styles/shelf.css';
 import { toast } from 'react-toastify';
 import { LoaderCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ShelfList = () => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [isLoadingShelves, setIsLoadingShelves] = useState(false);
 
 	const fetchUserShelves = useCallback(async () => {
@@ -19,7 +21,7 @@ const ShelfList = () => {
 			dispatch(setShelves(userShelves));
 		} catch (error) {
 			console.error('Error loading shelves:', error);
-			toast.error('No se pudieron cargar las estanterías');
+			toast.error(t('shelves.toastLoadError'));
 		} finally {
 			setIsLoadingShelves(false);
 		}
@@ -33,7 +35,7 @@ const ShelfList = () => {
 
 	return (
 		<div className='shelf-list'>
-			<h2 className='shelf-list-title'>Tus estanterías</h2>
+			<h2 className='shelf-list-title'>{t('shelves.title')}</h2>
 			{isLoadingShelves ? (
 				<div className='shelf-loading'>
 					<LoaderCircle className='input-spinner' size={18} />

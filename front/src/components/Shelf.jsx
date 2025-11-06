@@ -16,9 +16,11 @@ import { toast } from 'react-toastify';
 import { MembershipTypes } from '../utils/membership-types.js';
 import { LoaderCircle } from 'lucide-react';
 import { ReadingFilter, filterReadingsByDate } from '../utils/reading-filter';
+import { useTranslation } from 'react-i18next';
 
 const Shelf = ({ shelf }) => {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isAddReadingOpen, setIsAddReadingOpen] = useState(false);
 	const [isLoadingReadings, setIsLoadingReadings] = useState(false);
@@ -67,16 +69,14 @@ const Shelf = ({ shelf }) => {
 			const newReading = await createReading(reading);
 			setIsAddReadingOpen(false);
 			setIsExpanded(false);
-			toast.success('Lectura agregada correctamente');
+			toast.success(t('shelf.toastAddSuccess'));
 			dispatch(addReadingToShelf({ shelfId: shelf._id, reading: newReading }));
 		} catch (error) {
 			if (maxReadingsReached) {
-				return toast.error(
-					'Has alcanzado el límite de lecturas permitidas. Pasate a Premium para agregar más lecturas'
-				);
+				return toast.error(t('shelf.toastMaxReached'));
 			}
 			console.error('No se pudo agregar la lectura:', error);
-			return toast.error('No se pudo agregar la lectura');
+			return toast.error(t('shelf.toastAddError'));
 		}
 	};
 
@@ -117,7 +117,7 @@ const Shelf = ({ shelf }) => {
 					</div>
 					<button className='btn btn-ghost btn-sm' onClick={handleOpenModal}>
 						<Plus className='h-4 w-4' />
-						Agregar reading
+						{t('shelf.btnAddReading')}
 					</button>
 				</div>
 
@@ -125,51 +125,47 @@ const Shelf = ({ shelf }) => {
 					<>
 						<div className='shelf-filters'>
 							<button
-								className={`btn btn-sm ${
-									currentFilter === ReadingFilter.VER_TODOS
-										? 'btn-default'
-										: 'btn-ghost'
-								}`}
+								className={`btn btn-sm ${currentFilter === ReadingFilter.VER_TODOS
+									? 'btn-default'
+									: 'btn-ghost'
+									}`}
 								onClick={() => handleFilterClick(ReadingFilter.VER_TODOS)}
 							>
-								Ver todos
+								{t('shelf.filters.showAll')}
 							</button>
 							<button
-								className={`btn btn-sm ${
-									currentFilter === ReadingFilter.ULTIMA_SEMANA
-										? 'btn-default'
-										: 'btn-ghost'
-								}`}
+								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMA_SEMANA
+									? 'btn-default'
+									: 'btn-ghost'
+									}`}
 								onClick={() => handleFilterClick(ReadingFilter.ULTIMA_SEMANA)}
 							>
-								Terminados (Última semana)
+								{t('shelf.filters.finishedLastWeek')}
 							</button>
 							<button
-								className={`btn btn-sm ${
-									currentFilter === ReadingFilter.ULTIMO_MES
-										? 'btn-default'
-										: 'btn-ghost'
-								}`}
+								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMO_MES
+									? 'btn-default'
+									: 'btn-ghost'
+									}`}
 								onClick={() => handleFilterClick(ReadingFilter.ULTIMO_MES)}
 							>
-								Terminados (Último mes)
+								 {t('shelf.filters.finishedLastMonth')}
 							</button>
 							<button
-								className={`btn btn-sm ${
-									currentFilter === ReadingFilter.HISTORICO
-										? 'btn-default'
-										: 'btn-ghost'
-								}`}
+								className={`btn btn-sm ${currentFilter === ReadingFilter.HISTORICO
+									? 'btn-default'
+									: 'btn-ghost'
+									}`}
 								onClick={() => handleFilterClick(ReadingFilter.HISTORICO)}
 							>
-								Terminados (Histórico)
+								{t('shelf.filters.finishedAllTime')}
 							</button>
 						</div>
 
 						<div className='shelf-readings'>
 							{filteredReadings.length === 0 && (
 								<div className='shelf-readings-empty'>
-									<p>Actualmente no tienes ninguna lectura.</p>
+									<p>{t('shelf.empty.noReadings')}</p>
 								</div>
 							)}
 							{filteredReadings.map((reading) => (

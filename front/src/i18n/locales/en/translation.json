@@ -1,35 +1,111 @@
 {
     "login": {
-        "emailLabel": "Email",
-        "passwordLabel": "Password",
-        "placeholderEmail": "Enter your email",
-        "placeholderPassword": "Enter your password",
         "btnLogin": "Sign in",
         "btnLoggingIn": "Signing in...",
-        "btnCreateAccount": "Create account →",
-        "toastSuccess": "Signed in successfully."
+        "toastSuccess": "Signed in successfully.",
+        "toastGenericError": "We couldn't sign you in. Please try again.",
+        "toastSessionExpired": "Your session expired. Please sign in again.",
+        "toastLoggedOut": "Signed out successfully."
     },
     "register": {
         "subtitle": "Fill in your details to create your account at <brand>{{brand}}</brand>.",
         "nameLabel": "First name",
         "surnameLabel": "Last name",
-        "emailLabel": "Email",
-        "passwordLabel": "Password",
         "repeatPasswordLabel": "Confirm password",
         "placeholderName": "Enter your first name",
         "placeholderSurname": "Enter your last name",
-        "placeholderEmail": "Enter your email",
         "placeholderPasswordCreate": "Create a password",
         "placeholderPasswordRepeat": "Repeat your password",
-        "btnCreateAccount": "Create account",
         "btnCreatingAccount": "Creating account...",
         "linkHaveAccount": "← I already have an account",
-        "toastSuccess": "Account created successfully."
-    },
-    "navbar":{
-        "btnLogout": "Logout"
+        "toastSuccess": "Account created successfully.",
+        "toastGenericError": "We couldn't create the account. Please try again."
     },
     "dashboard": {
-        "dashboardTitle": "Mi Library"
+        "dashboardTitle": "My Library"
+    },
+    "shelves": {
+        "title": "Your shelves",
+        "toastLoadError": "We couldn't load your shelves. Please try again."
+    },
+    "shelf": {
+        "btnAddReading": "Add reading",
+        "filters": {
+            "showAll": "See all",
+            "finishedLastWeek": "Finished (Last week)",
+            "finishedLastMonth": "Finished (Last month)",
+            "finishedAllTime": "Finished (All time)"
+        },
+        "empty": {
+            "noReadings": "You currently have no readings."
+        },
+        "toastAddSuccess": "Reading added successfully.",
+        "toastAddError": "We couldn't add the reading.",
+        "toastMaxReached": "You've reached your allowed readings limit. Upgrade to Premium to add more readings."
+    },
+    "reading": {
+        "toastUpdateSuccess": "Reading updated successfully.",
+        "toastUpdateErrorGeneric": "We couldn't update the reading.",
+        "toastDeleteSuccess": "Reading deleted successfully.",
+        "toastDeleteErrorGeneric": "We couldn't delete the reading.",
+        "modalDelete": {
+            "title": "Are you sure you want to delete this reading?",
+            "description": "This action cannot be undone.",
+            "confirm": "Delete",
+            "cancel": "Cancel"
+        },
+        "modalEdit": {
+            "title": "Update reading",
+            "confirm": "Save changes",
+            "cancel": "Cancel"
+        }
+    },
+    "readingForm": {
+        "labels": {
+            "status": "Reading status",
+            "currentPage": "Current page",
+            "startDateOptional": "Start date (optional)",
+            "finishDate": "Finish date"
+        },
+        "status": {
+            "WANT_TO_READ": "Want to read",
+            "CURRENTLY_READING": "Reading",
+            "FINISHED": "Completed",
+            "ABANDONED": "Abandoned"
+        }
+    },
+    "bookSearch": {
+        "resultsLabel": "Results",
+        "placeholderSearch": "Search by title, author..."
+    },
+    "addReading": {
+        "title": "Add reading",
+        "description": "Search for a book and add its reading details"
+    },
+    "common": {
+        "form": {
+            "emailLabel": "Email",
+            "passwordLabel": "Password",
+            "placeholderEmail": "Enter your email",
+            "placeholderPassword": "Enter your password"
+        },
+        "actions": {
+            "createAccount": "Create account",
+            "change": "Change",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "saveChanges": "Save changes",
+            "logout": "Logout"
+        },
+        "labels": {
+            "unknownAuthor": "Unknown author"
+        },
+        "units": {
+            "pages_one": "page",
+            "pages_other": "pages"
+        },
+        "confirmations": {
+            "irreversibleAction": "This action cannot be undone."
+        }
     }
 }

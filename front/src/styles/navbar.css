@@ -54,6 +54,58 @@
     cursor: not-allowed;
 }
 
+/* SELECT de idioma */
+.navbar select {
+    margin: 0 0.5rem;
+    padding: 0.45rem 1.75rem 0.45rem 0.75rem;
+    border: 1px solid var(--marronOscuro);
+    border-radius: var(--radius);
+    background: var(--beigeClaro);
+    color: var(--marronOscuro);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.02s ease-in;
+}
+
+.navbar select:hover {
+    background: var(--gris);
+}
+
+.navbar select:focus-visible {
+    outline: none;
+    border-color: var(--rosado);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--rosado) 25%, transparent);
+}
+
+.navbar select:active {
+    transform: translateY(1px);
+}
+
+.navbar select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.navbar select::-ms-expand {
+    display: none;
+}
+
+.navbar option {
+    color: var(--marronOscuro);
+    background: var(--beigeClaro);
+    font-weight: 500;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .navbar__inner {
@@ -67,5 +119,11 @@
     .navbar__logout {
         padding: 0.45rem 0.75rem;
         font-size: 0.95rem;
+    }
+
+    .navbar select {
+        padding: 0.4rem 1.25rem 0.4rem 0.6rem;
+        font-size: 0.9rem;
+        margin: 0 0.25rem;
     }
 }

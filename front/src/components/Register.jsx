@@ -87,13 +87,13 @@ const Register = () => {
 					})
 				);
 				navigate('/dashboard');
-				toast.success("Cuenta registrada con éxito.")
+				toast.success((t('register.toastSuccess')));
 			} else {
 				setValue('password', '');
 				setValue('repeatPassword', '');
 			}
 		} catch (err) {
-			const msg = err?.response?.data?.error
+			const msg = err?.response?.data?.message
 			setValue('password', '');
 			setValue('repeatPassword', '');
 			setError(msg || '');
@@ -153,11 +153,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idEmail}>{t('register.emailLabel')}</label>
+					<label htmlFor={idEmail}>{t('common.form.emailLabel')}</label>
 					<input
 						type='email'
 						id={idEmail}
-						placeholder={t('register.placeholderEmail')}
+						placeholder={t('common.form.placeholderEmail')}
 						autoComplete='email'
 						aria-invalid={!!errors.email}
 						{...register('email')}
@@ -168,11 +168,11 @@ const Register = () => {
 				</div>
 
 				<div className='form-group'>
-					<label htmlFor={idPassword}>{t('register.passwordLabel')}</label>
+					<label htmlFor={idPassword}>{t('common.form.passwordLabel')}</label>
 					<input
 						type='password'
 						id={idPassword}
-						placeholder={t('register.placeholderPasswordCreate')}
+						placeholder={t('common.form.placeholderPassword')}
 						autoComplete='new-password'
 						aria-invalid={!!errors.password}
 						{...register('password')}
@@ -205,12 +205,12 @@ const Register = () => {
 					className='btn btn-muted'
 					disabled={!canSubmit}
 				>
-					{loading ? t('register.btnCreatingAccount') : t('register.btnCreateAccount')}
+					{loading ? t('register.btnCreatingAccount') : t('common.actions.createAccount')}
 				</Boton>
 
 				<div className='actions'>
 					<Link to='/login' className='back-btn'>
-						{t('register.linkHaveAccount')}
+						{'← ' + t('register.linkHaveAccount')}
 					</Link>
 				</div>
 			</form>
