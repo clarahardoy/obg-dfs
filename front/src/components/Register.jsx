@@ -77,7 +77,9 @@ const Register = () => {
 
 			if (data?.data.token) {
 				localStorage.setItem('token', data.data.token);
-				if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
+				localStorage.setItem('role', data.data.role ?? '');
+				localStorage.setItem('membership', data.data.membership ?? '');
+				localStorage.setItem('maxReadings', String(data.data.maxReadings ?? 0));
 				dispatch(
 					loguear({
 						token: data.data.token,

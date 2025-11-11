@@ -21,11 +21,22 @@ const StatsSection = () => {
 		return Object.values(allReadingsByShelf).reduce((acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0), 0);
 	}, [allReadingsByShelf]);
 
+	const readingsFingerprint = useMemo(() => {
+		if (!allReadingsByShelf) return '0';
+		const parts = [];
+		for (const arr of Object.values(allReadingsByShelf)) {
+			if (!Array.isArray(arr)) continue;
+			for (const r of arr) parts.push(`${r._id}:${r.status}`);
+		}
+		return parts.sort().join('|');
+	}, [allReadingsByShelf]);
+
 	// Membership:
 	const isLimitedPlan = useMemo(() => {
 		const plan = membership?.toUpperCase?.() ?? '';
 		return plan === MembershipTypes.BASIC || plan === MembershipTypes.PREMIUM;
 	}, [membership]);
+
 	const usagePercent = useMemo(() => {
 		if (!isLimitedPlan || !maxReadings) return null;
 		const pct = Math.min(100, Math.round((totalReadings / maxReadings) * 100));
@@ -35,20 +46,21 @@ const StatsSection = () => {
 	// Cantidad de páginas lídas y
 	// género más leído
 	useEffect(() => {
+		let ignore = false;
 		const fetchStats = async () => {
 			try {
 				setLoading(true);
-				const data = await getReadingStatsByShelf(); // tu service devuelve { message, stats }
-				// data.stats = { totalPagesRead, mostReadGenre, ... }
-				if (data?.stats) dispatch(setStats(data.stats));
+				const data = await getReadingStatsByShelf(); // devuelve { message, stats }
+				if (!ignore && data?.stats) dispatch(setStats(data.stats));
 			} catch (err) {
 				console.error('No se pudieron obtener las estadísticas de las lecturas:', err);
 			} finally {
-				setLoading(false);
+				if (!ignore) setLoading(false);
 			}
 		};
 		fetchStats();
-	}, [dispatch]);
+		return () => { ignore = true; };
+	}, [dispatch, readingsFingerprint]);
 
 	// Mostrar cantidad de Readings subidas 
 	// según membership
@@ -65,7 +77,10 @@ const StatsSection = () => {
 			label: 'lecturas subidas',
 		};
 	const topGenre = mostReadGenre?.genre ?? '—';
-	const topGenreCount = typeof mostReadGenre?.count === 'number' ? `${mostReadGenre.count} libro${mostReadGenre.count === 1 ? '' : 's'}` : null;
+	const topGenreCount =
+		typeof mostReadGenre?.count === 'number'
+			? `${mostReadGenre.count} libro${mostReadGenre.count === 1 ? '' : 's'}`
+			: null;
 
 	const stats = [
 		firstCard,

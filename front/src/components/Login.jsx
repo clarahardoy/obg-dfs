@@ -51,6 +51,9 @@ const Login = () => {
 
 			if (data?.data.token) {
 				localStorage.setItem('token', data.data.token);
+				localStorage.setItem('membership', data.data.membership ?? '');
+				localStorage.setItem('role', data.data.role ?? '');
+				localStorage.setItem('maxReadings', String(data.data.maxReadings ?? 0));
 				dispatch(
 					loguear({
 						token: data.data.token,
