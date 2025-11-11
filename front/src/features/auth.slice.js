@@ -26,5 +26,4 @@ const authSlice = createSlice({
 });
 
 export const { loguear, desloguear } = authSlice.actions;
-
 export default authSlice.reducer;
