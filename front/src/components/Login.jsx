@@ -54,12 +54,17 @@ const Login = () => {
 				localStorage.setItem('membership', data.data.membership ?? '');
 				localStorage.setItem('role', data.data.role ?? '');
 				localStorage.setItem('maxReadings', String(data.data.maxReadings ?? 0));
+				const avatarFromApi = data?.data?.avatarUrl || avatarUrl;
+				if (avatarFromApi) {
+					localStorage.setItem('avatarUrl', avatarFromApi);
+				}
 				dispatch(
 					loguear({
 						token: data.data.token,
 						role: data.data.role,
 						membership: data.data.membership,
 						maxReadings: data.data.maxReadings,
+						avatarUrl: avatarFromApi,
 					})
 				);
 				navigate('/dashboard');

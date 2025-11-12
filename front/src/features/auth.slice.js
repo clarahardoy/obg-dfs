@@ -6,6 +6,7 @@ const initialState = {
 	role: null,
 	maxReadings: 0,
 	membership: null,
+	avatarUrl: null,
 };
 
 const authSlice = createSlice({
@@ -18,6 +19,7 @@ const authSlice = createSlice({
 			state.role = action.payload.role;
 			state.maxReadings = action.payload.maxReadings;
 			state.membership = action.payload.membership;
+			state.avatarUrl = action.payload.avatarUrl || null;
 		},
 		desloguear: () => {
 			return initialState;

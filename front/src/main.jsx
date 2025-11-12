@@ -12,7 +12,8 @@ if (token) {
   const role = localStorage.getItem('role') || null;
   const membership = localStorage.getItem('membership') || null;
   const maxReadings = parseInt(localStorage.getItem('maxReadings') || '0', 10);
-  store.dispatch(loguear({ token, role, membership, maxReadings }));
+  const avatarUrl = localStorage.getItem('avatarUrl') || null;
+  store.dispatch(loguear({ token, role, membership, maxReadings, avatarUrl }));
 }
 
 createRoot(document.getElementById('root')).render(

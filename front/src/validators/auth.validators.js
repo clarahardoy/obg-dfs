@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { fileSchema } from './image.validator.js';
 
 export const loginValidator = Joi.object({
     email: Joi.string().email().required().messages({
@@ -46,4 +47,5 @@ export const registerValidator = Joi.object({
         "string.base": "Debe ser un texto.",
         "any.only": "El rol debe ser admin o user."
     }),
+    image: fileSchema
 });

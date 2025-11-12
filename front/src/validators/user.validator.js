@@ -51,4 +51,4 @@ export const updateUserSchema = Joi.object({
     "string.base": "Debe ser un texto.",
     "any.only": "El rol debe ser admin o user."
   }),
-}).min(1); // al menos un campo debe estar presente
+}).min(1);
