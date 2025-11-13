@@ -41,7 +41,7 @@ const Reading = ({ reading }) => {
 	const dispatch = useDispatch();
 
 	const allReadings = useSelector(
-		(state) => state.shelves.allReadingsByShelf[reading.shelfId] || []
+		(state) => state.shelves.allReadingsByShelf[reading.shelfId]
 	);
 	const currentFilter = useSelector(
 		(state) => state.shelves.currentFilter[reading.shelfId]

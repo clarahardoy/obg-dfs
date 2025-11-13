@@ -21,6 +21,8 @@ import { useTranslation } from 'react-i18next';
 import { ShelfForm } from './ShelfForm';
 import ModalConfirmacion from './ModalConfirmacion';
 
+const EMPTY_ARRAY = [];
+
 const Shelf = ({ shelf }) => {
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
@@ -31,15 +33,13 @@ const Shelf = ({ shelf }) => {
 	const [isDeleteShelfOpen, setIsDeleteShelfOpen] = useState(false);
 	const [isDeletingShelf, setIsDeletingShelf] = useState(false);
 
-	const allReadings = useSelector(
-		(state) => state.shelves.allReadingsByShelf[shelf._id] || []
-	);
-	const filteredReadings = useSelector(
-		(state) => state.shelves.readingsByShelf[shelf._id] || []
-	);
-	const currentFilter = useSelector(
-		(state) => state.shelves.currentFilter[shelf._id] || ReadingFilter.VER_TODOS
-	);
+	const allReadingsByShelf = useSelector((state) => state.shelves.allReadingsByShelf);
+	const readingsByShelf = useSelector((state) => state.shelves.readingsByShelf);
+	const currentFilterByShelf = useSelector((state) => state.shelves.currentFilter);
+	const allReadings = allReadingsByShelf?.[shelf._id] ?? EMPTY_ARRAY;
+	const filteredReadings = readingsByShelf?.[shelf._id] ?? EMPTY_ARRAY;
+	const currentFilter = currentFilterByShelf?.[shelf._id] ?? ReadingFilter.VER_TODOS;
+
 	const userMembership = useSelector((state) => state.auth.membership);
 	const maxReadingsAllowed = useSelector((state) => state.auth.maxReadings);
 	const isPremium = userMembership === MembershipTypes.PREMIUM;
@@ -198,8 +198,8 @@ const Shelf = ({ shelf }) => {
 						<div className='shelf-filters'>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.VER_TODOS
-										? 'btn-default'
-										: 'btn-ghost'
+									? 'btn-default'
+									: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.VER_TODOS)}
 							>
@@ -207,8 +207,8 @@ const Shelf = ({ shelf }) => {
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMA_SEMANA
-										? 'btn-default'
-										: 'btn-ghost'
+									? 'btn-default'
+									: 'btn-ghost'
 									}`}
 								onClick={() =>
 									handleFilterClick(ReadingFilter.ULTIMA_SEMANA)
@@ -218,8 +218,8 @@ const Shelf = ({ shelf }) => {
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMO_MES
-										? 'btn-default'
-										: 'btn-ghost'
+									? 'btn-default'
+									: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.ULTIMO_MES)}
 							>
@@ -227,8 +227,8 @@ const Shelf = ({ shelf }) => {
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.HISTORICO
-										? 'btn-default'
-										: 'btn-ghost'
+									? 'btn-default'
+									: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.HISTORICO)}
 							>

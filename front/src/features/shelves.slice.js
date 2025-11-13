@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	shelves: [],
-	allReadingsByShelf: {}, // Store all readings without filter
-	readingsByShelf: {},    // Store filtered readings for display
-	currentFilter: {},      // Track current filter per shelf
+	allReadingsByShelf: [], // Store all readings without filter
+	readingsByShelf: [],    // Store filtered readings for display
+	currentFilter: [],      // Track current filter per shelf
 };
 
 export const shelvesSlice = createSlice({

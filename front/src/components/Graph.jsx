@@ -40,7 +40,7 @@ export const options = {
 
 export function Graph() {
     const { t } = useTranslation();
-    const booksByGenre = useSelector((state) => state.stats.booksByGenre || []);
+    const booksByGenre = useSelector((state) => state.stats.booksByGenre);
     const [isExpanded, setIsExpanded] = useState(true);
 
     if (!booksByGenre.length) {
