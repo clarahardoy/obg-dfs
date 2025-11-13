@@ -102,10 +102,28 @@
         },
         "units": {
             "pages_one": "página",
-            "pages_other": "páginas"
+            "pages_other": "páginas",
+            "books_one": "libro",
+            "books_other": "libros"
         },
         "confirmations": {
             "irreversibleAction": "Esta acción no se puede deshacer."
         }
+    },
+    "stats": {
+        "readingsUploaded": "lecturas subidas",
+        "pagesRead": "páginas leídas",
+        "mostReadGenre": "género más leído",
+        "sublabelUsage": "({{total}}/{{max}})",
+        "toastGenericError": "No pudimos obtener tus estadísticas de lectura."
+    },
+    "plan": {
+        "title": "Cambiá de plan",
+        "ctaAddPremium": "Agregá Premium",
+        "description": "Obtené los beneficios del plan Premium: lecturas ilimitadas y más de 1 estantería personalizable.",
+        "btnUpgrade": "Pasar a Premium",
+        "btnUpgrading": "Actualizando…",
+        "toastSuccess": "¡Ahora sos PREMIUM!",
+        "toastErrorGeneric": "No se pudo cambiar el plan."
     }
 }

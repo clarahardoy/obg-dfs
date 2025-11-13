@@ -1,24 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BookOpen, FileText, Heart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import '../styles/stats.css';
 import { getReadingStatsByShelf } from '../services/stats.service';
 import { setStats } from '../features/stats.slice';
 import { MembershipTypes } from '../utils/membership-types';
 
-const formatInt = (n) => new Intl.NumberFormat('es-UY', { maximumFractionDigits: 0 }).format(n ?? 0);
-
 const StatsSection = () => {
 	const dispatch = useDispatch();
+	const { t, i18n } = useTranslation();
 	const { totalPagesRead, mostReadGenre } = useSelector((s) => s.stats);
 	const { membership, maxReadings } = useSelector((s) => s.auth);
 	const allReadingsByShelf = useSelector((s) => s.shelves.allReadingsByShelf);
 	const [loading, setLoading] = useState(false);
 
-	// Total de Readings subidas
+	const numberLocale = i18n.language?.startsWith('es') ? 'es-UY' : 'en-US';
+	const formatInt = useCallback(
+		(n) => new Intl.NumberFormat(numberLocale, { maximumFractionDigits: 0 }).format(n ?? 0),
+		[numberLocale]
+	);
+
 	const totalReadings = useMemo(() => {
 		if (!allReadingsByShelf) return 0;
-		return Object.values(allReadingsByShelf).reduce((acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0), 0);
+		return Object.values(allReadingsByShelf).reduce(
+			(acc, arr) => acc + (Array.isArray(arr) ? arr.length : 0),
+			0
+		);
 	}, [allReadingsByShelf]);
 
 	const readingsFingerprint = useMemo(() => {
@@ -31,55 +39,62 @@ const StatsSection = () => {
 		return parts.sort().join('|');
 	}, [allReadingsByShelf]);
 
-	// Membership:
-	const isLimitedPlan = useMemo(() => {
-		const plan = membership?.toUpperCase?.() ?? '';
-		return plan === MembershipTypes.BASIC || plan === MembershipTypes.PREMIUM;
-	}, [membership]);
+	const plan = useMemo(() => (membership ?? '').trim().toUpperCase(), [membership]);
+	const isBasic = plan === MembershipTypes.BASIC;
 
+	const hasUploadLimit = isBasic;
+	const effectiveMax = useMemo(() => {
+		if (!hasUploadLimit) return null;
+		const max = Number(maxReadings);
+		return Number.isFinite(max) && max > 0 ? max : 0;
+	}, [hasUploadLimit, maxReadings]);
+
+	const used = Math.max(0, Number(totalReadings ?? 0));
 	const usagePercent = useMemo(() => {
-		if (!isLimitedPlan || !maxReadings) return null;
-		const pct = Math.min(100, Math.round((totalReadings / maxReadings) * 100));
-		return isNaN(pct) ? 0 : pct;
-	}, [isLimitedPlan, totalReadings, maxReadings]);
+		if (!hasUploadLimit || !(effectiveMax > 0)) return null;
+		const pct = Math.round((used / effectiveMax) * 100);
+		return Math.min(100, Math.max(0, isNaN(pct) ? 0 : pct));
+	}, [hasUploadLimit, used, effectiveMax]);
 
-	// Cantidad de páginas lídas y
-	// género más leído
 	useEffect(() => {
 		let ignore = false;
 		const fetchStats = async () => {
 			try {
 				setLoading(true);
-				const data = await getReadingStatsByShelf(); // devuelve { message, stats }
+				const data = await getReadingStatsByShelf();
 				if (!ignore && data?.stats) dispatch(setStats(data.stats));
 			} catch (err) {
-				console.error('No se pudieron obtener las estadísticas de las lecturas:', err);
+				console.error(t('stats.toastGenericError'), err);
 			} finally {
 				if (!ignore) setLoading(false);
 			}
 		};
 		fetchStats();
-		return () => { ignore = true; };
-	}, [dispatch, readingsFingerprint]);
+		return () => {
+			ignore = true;
+		};
+	}, [dispatch, readingsFingerprint, t]);
 
-	// Mostrar cantidad de Readings subidas 
-	// según membership
-	const firstCard = isLimitedPlan
+	const firstCard = hasUploadLimit
 		? {
 			icon: BookOpen,
 			value: `${usagePercent ?? 0}%`,
-			label: 'lecturas subidas',
-			sublabel: `(${totalReadings}/${maxReadings || 0})`,
+			label: t('stats.readingsUploaded'),
+			sublabel: t('stats.sublabelUsage', {
+				total: formatInt(used),
+				max: formatInt(effectiveMax ?? 0)
+			})
 		}
 		: {
 			icon: BookOpen,
-			value: `${formatInt(totalReadings)}`,
-			label: 'lecturas subidas',
+			value: `${formatInt(used)}`,
+			label: t('stats.readingsUploaded')
 		};
+
 	const topGenre = mostReadGenre?.genre ?? '—';
 	const topGenreCount =
 		typeof mostReadGenre?.count === 'number'
-			? `${mostReadGenre.count} libro${mostReadGenre.count === 1 ? '' : 's'}`
+			? `${mostReadGenre.count} ${t('common.units.books', { count: mostReadGenre.count })}`
 			: null;
 
 	const stats = [
@@ -87,30 +102,30 @@ const StatsSection = () => {
 		{
 			icon: FileText,
 			value: formatInt(totalPagesRead),
-			label: 'páginas leídas',
+			label: t('stats.pagesRead')
 		},
 		{
 			icon: Heart,
 			value: topGenre,
-			label: 'género más leído',
-			sublabel: topGenreCount,
-		},
+			label: t('stats.mostReadGenre'),
+			sublabel: topGenreCount
+		}
 	];
 
 	return (
-		<div className='stats-grid' aria-busy={loading ? 'true' : 'false'}>
+		<div className="stats-grid" aria-busy={loading ? 'true' : 'false'}>
 			{stats.map((stat, index) => {
 				const Icon = stat.icon;
 				return (
-					<div key={index} className='stat-card'>
-						<div className='stat-header'>
-							<Icon className='stat-icon' />
+					<div key={index} className="stat-card">
+						<div className="stat-header">
+							<Icon className="stat-icon" />
 						</div>
-						<div className='stat-body'>
-							<div className='stat-value'>{stat.value}</div>
-							<div className='stat-label'>
+						<div className="stat-body">
+							<div className="stat-value">{stat.value}</div>
+							<div className="stat-label">
 								{stat.label}{' '}
-								{stat.sublabel && <span className='stat-sublabel'>{stat.sublabel}</span>}
+								{stat.sublabel && <span className="stat-sublabel">{stat.sublabel}</span>}
 							</div>
 						</div>
 					</div>

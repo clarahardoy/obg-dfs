@@ -68,7 +68,7 @@ const Login = () => {
 					})
 				);
 				navigate('/dashboard');
-				toast.success((t('login.toastSuccess')))
+				toast.success((t('login.toastSuccess')));
 			}
 		} catch (err) {
 			const msg = err?.response?.data?.message

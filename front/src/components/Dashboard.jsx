@@ -3,6 +3,7 @@ import StatsSection from './StatsSection';
 import '../styles/dashboard.css';
 import Navbar from './Navbar.jsx';
 import { useTranslation } from 'react-i18next';
+import Plan from './Plan.jsx';
 
 const Dashboard = () => {
 	const { t } = useTranslation();
@@ -13,7 +14,7 @@ const Dashboard = () => {
 				<h1 className='dashboard-title'>{t('dashboard.dashboardTitle')}</h1>
 				<StatsSection />
 				<ShelfList />
-				{/* <Plan /> */}
+				<Plan />
 			</div>
 		</>
 	);

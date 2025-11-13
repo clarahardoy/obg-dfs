@@ -102,10 +102,28 @@
         },
         "units": {
             "pages_one": "page",
-            "pages_other": "pages"
+            "pages_other": "pages",
+            "books_one": "book",
+            "books_other": "books"
         },
         "confirmations": {
             "irreversibleAction": "This action cannot be undone."
         }
+    },
+    "stats": {
+        "readingsUploaded": "readings uploaded",
+        "pagesRead": "pages read",
+        "mostReadGenre": "most read genre",
+        "sublabelUsage": "({{total}}/{{max}})",
+        "toastGenericError": "We couldn't load your reading statistics."
+    },
+    "plan": {
+        "title": "Change plan",
+        "ctaAddPremium": "Add Premium",
+        "description": "Get the benefits of Premium: unlimited readings and more than 1 customizable shelf.",
+        "btnUpgrade": "Upgrade to Premium",
+        "btnUpgrading": "Upgrading…",
+        "toastSuccess": "You're PREMIUM now!",
+        "toastErrorGeneric": "We couldn't change the plan."
     }
 }

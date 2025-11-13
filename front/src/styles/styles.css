@@ -57,7 +57,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
-/* Para las toasts que notifican */
+/* TOASTS */
 .Toastify__progress-bar--success {
 	background-color: var(--marronOscuro) !important;
 }

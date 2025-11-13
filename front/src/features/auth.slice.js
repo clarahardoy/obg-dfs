@@ -4,8 +4,8 @@ const initialState = {
 	authenticated: false,
 	token: null,
 	role: null,
-	maxReadings: 0,
-	membership: null,
+	maxReadings: Number(localStorage.getItem('maxReadings')) || 10,
+	membership: localStorage.getItem('membership') || 'BASIC',
 	avatarUrl: null,
 };
 
@@ -24,8 +24,14 @@ const authSlice = createSlice({
 		desloguear: () => {
 			return initialState;
 		},
+		setMembership(state, action) {
+			state.membership = action.payload.membership;
+			if (typeof action.payload.maxReadings !== 'undefined') {
+				state.maxReadings = action.payload.maxReadings;
+			}
+		},
 	},
 });
 
-export const { loguear, desloguear } = authSlice.actions;
+export const { loguear, desloguear, setMembership } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,0 +1,105 @@
+.plan {
+    background-color: var(--gris);
+    border: 1px solid var(--grisMediano);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.plan:hover {
+    border-color: var(--marronOscuro);
+}
+
+.plan__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.plan__chevron {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--marronOscuro);
+    border-bottom: 2px solid var(--marronOscuro);
+    transform: rotate(-45deg);
+    transition: transform 180ms ease;
+}
+
+.plan__chevron.is-open {
+    transform: rotate(45deg);
+}
+
+.plan__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--marronOscuro);
+    margin-right: auto;
+}
+
+.plan__cta-text {
+    font-size: 0.875rem;
+    color: var(--marronOscuro);
+    background-color: transparent;
+    border-radius: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.plan__cta-text:hover {
+    color: var(--rosado);
+    background-color: var(--beigeClaro);
+}
+
+.plan__body {
+    border-top: 1px solid var(--grisMediano);
+    padding: 0.75rem 1.25rem 1.25rem;
+    animation: planFadeIn 140ms ease-out;
+}
+
+@keyframes planFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.plan__desc {
+    color: var(--negro);
+    line-height: 1.5;
+    margin: 0 0 1rem;
+}
+
+.plan__actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.plan__actions button {
+    background-color: var(--marronOscuro);
+    color: var(--blanco);
+    border: 1px solid var(--marronOscuro);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.plan__actions button:hover {
+    opacity: 0.9;
+}
+
+.plan__header:focus-visible,
+.plan__cta-text:focus-visible,
+.plan__actions button:focus-visible {
+    outline: 2px solid var(--marronOscuro);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+}
