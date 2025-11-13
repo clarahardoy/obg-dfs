@@ -1,20 +1,31 @@
 .graph-card {
 	background-color: var(--gris);
 	border: 1px solid var(--grisMediano);
-	border-radius: var(--radius);
-	overflow: hidden;
+	border-radius: 0.5rem;
+	padding: 1.5rem;
 	margin-block: 1.5rem;
 }
 
 .graph-card:hover {
-	border-color: var(--marronOscuro);
+	border: 0.5px solid var(--marronOscuro);
 }
 
 .graph-card__header {
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.graph-card__header-left {
+	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 1rem 1.25rem;
+}
+
+.graph-card__chevron {
+	width: 20px;
+	height: 20px;
+	color: var(--marronOscuro);
 }
 
 .graph-card__icon {
@@ -32,7 +43,13 @@
 
 .graph-card__body {
 	border-top: 1px solid var(--grisMediano);
-	padding: 0.75rem 1.25rem 1.25rem;
+	margin-top: 1rem;
+	padding-top: 1.25rem;
+	justify-content: center;
+}
+
+.graph-card__canvas-wrapper {
+	width: 100%;
 }
 
 .graph-card__canvas {
@@ -47,11 +64,16 @@
 
 /* Responsive */
 @media (max-width: 640px) {
+	.graph-card {
+		margin-block: 1rem;
+		padding: 1.25rem;
+	}
+
 	.graph-card__canvas {
 		height: 260px !important;
 	}
 
-	.graph-card {
-		margin-block: 1rem;
+	.graph-card__canvas-wrapper {
+		max-width: 100%;
 	}
 }

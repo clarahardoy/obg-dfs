@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+	shelves: [],
+	allReadingsByShelf: {}, // Store all readings without filter
+	readingsByShelf: {},    // Store filtered readings for display
+	currentFilter: {},      // Track current filter per shelf
+};
+
 export const shelvesSlice = createSlice({
 	name: 'shelves',
-	initialState: {
-		shelves: [],
-		allReadingsByShelf: {}, // Store all readings without filter
-		readingsByShelf: {}, // Store filtered readings for display
-		currentFilter: {}, // Track current filter per shelf
-	},
+	initialState,
 	reducers: {
 		setShelves: (state, action) => {
 			state.shelves = action.payload;
@@ -26,7 +28,6 @@ export const shelvesSlice = createSlice({
 		},
 		addReadingToShelf: (state, action) => {
 			const { shelfId, reading } = action.payload;
-			// Add to both all readings and filtered readings
 			if (state.allReadingsByShelf[shelfId]) {
 				state.allReadingsByShelf[shelfId].push(reading);
 			} else {
@@ -40,17 +41,15 @@ export const shelvesSlice = createSlice({
 		},
 		deleteReadingFromShelf: (state, action) => {
 			const { shelfId, readingId } = action.payload;
-			// Delete from both all readings and filtered readings
-			state.allReadingsByShelf[shelfId] = state.allReadingsByShelf[
-				shelfId
-			].filter((reading) => reading._id !== readingId);
+			state.allReadingsByShelf[shelfId] = state.allReadingsByShelf[shelfId].filter(
+				(reading) => reading._id !== readingId
+			);
 			state.readingsByShelf[shelfId] = state.readingsByShelf[shelfId].filter(
 				(reading) => reading._id !== readingId
 			);
 		},
 		updateReadingInShelf: (state, action) => {
 			const { shelfId, readingId, updatedReading } = action.payload;
-			// Update in both all readings and filtered readings
 			const allReadings = state.allReadingsByShelf[shelfId];
 			if (allReadings) {
 				const allIndex = allReadings.findIndex(
@@ -70,6 +69,7 @@ export const shelvesSlice = createSlice({
 				}
 			}
 		},
+		resetShelves: () => initialState,
 	},
 });
 
@@ -81,6 +81,7 @@ export const {
 	addReadingToShelf,
 	deleteReadingFromShelf,
 	updateReadingInShelf,
+	resetShelves,
 } = shelvesSlice.actions;
 
 export default shelvesSlice.reducer;

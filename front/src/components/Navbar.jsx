@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { desloguear } from '../features/auth.slice.js';
-import { useNavigate } from 'react-router';
+import { resetShelves } from '../features/shelves.slice.js';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
 import '../styles/navbar.css';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 const Navbar = () => {
 	const dispatch = useDispatch();
@@ -17,13 +18,13 @@ const Navbar = () => {
 		try {
 			localStorage.clear();
 			dispatch(desloguear());
+			dispatch(resetShelves());
 			navigate('/');
 			toast.success(t('login.toastLoggedOut'));
 		} catch (err) {
 			console.log(err?.response?.data?.message);
 		}
 	};
-
 	const changeLanguage = e => {
 		const language = e.target.value;
 		i18n.changeLanguage(language);
