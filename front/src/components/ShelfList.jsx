@@ -68,7 +68,7 @@ const ShelfList = () => {
 
 			{isLoadingShelves ? (
 				<div className='shelf-loading'>
-					<LoaderCircle className='input-spinner' size={24} />
+					<LoaderCircle className='input-spinner' size={40} />
 				</div>
 			) : (
 				<ul className='shelf-list-items'>
