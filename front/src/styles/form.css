@@ -109,6 +109,18 @@ button[type='submit'][disabled] {
 	box-shadow: none;
 }
 
+.btn-spinner {
+	display: inline-block;
+	vertical-align: middle;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 /* ====== MENSAJE DE ERROR GENERAL (backend) ====== */
 .mensaje-error:last-of-type {
 	width: 100%;

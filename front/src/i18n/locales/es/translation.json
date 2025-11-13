@@ -1,7 +1,6 @@
 {
     "login": {
         "btnLogin": "Iniciar sesión",
-        "btnLoggingIn": "Ingresando...",
         "toastSuccess": "Sesión iniciada con éxito.",
         "toastGenericError": "No pudimos iniciar sesión. Inténtalo de nuevo.",
         "toastSessionExpired": "Tu sesión expiró. Vuelve a iniciar sesión.",
@@ -16,7 +15,6 @@
         "placeholderSurname": "Ingresa tu apellido",
         "placeholderPasswordCreate": "Crea una contraseña",
         "placeholderPasswordRepeat": "Repite tu contraseña",
-        "btnCreatingAccount": "Creando cuenta...",
         "linkHaveAccount": "Ya tengo cuenta",
         "toastSuccess": "Cuenta registrada con éxito.",
         "toastGenericError": "No pudimos crear la cuenta. Inténtalo de nuevo."
@@ -26,7 +24,19 @@
     },
     "shelves": {
         "title": "Tus estanterías",
-        "toastLoadError": "No pudimos cargar tus estanterías. Inténtalo de nuevo."
+        "toastLoadError": "No pudimos cargar tus estanterías. Inténtalo de nuevo.",
+        "btnAddShelf": "Agregar estantería",
+        "toastAddSuccess": "Estantería creada correctamente.",
+        "toastAddError": "No se pudo crear la estantería. Inténtalo de nuevo.",
+        "form": {
+            "addTitle": "Nueva estantería",
+            "editTitle": "Editar estantería",
+            "addDescription": "Creá una nueva estantería para organizar tus lecturas.",
+            "editDescription": "Actualizá el nombre de esta estantería.",
+            "nameLabel": "Nombre de la estantería",
+            "btnCreate": "Crear estantería",
+            "btnSave": "Guardar cambios"
+        }
     },
     "shelf": {
         "btnAddReading": "Agregar lectura",
@@ -41,7 +51,20 @@
         },
         "toastAddSuccess": "Lectura agregada correctamente.",
         "toastAddError": "No se pudo agregar la lectura.",
-        "toastMaxReached": "Has alcanzado el límite de lecturas permitidas. Pasate a Premium para agregar más lecturas."
+        "toastMaxReached": "Has alcanzado el límite de lecturas permitidas. Pasate a Premium para agregar más lecturas.",
+        "toastUpdateSuccess": "Estantería actualizada correctamente.",
+        "toastUpdateError": "No se pudo actualizar la estantería.",
+        "toastDeleteSuccess": "Estantería eliminada correctamente.",
+        "toastDeleteError": "No se pudo eliminar la estantería.",
+        "actions": {
+            "edit": "Editar estantería",
+            "delete": "Eliminar estantería"
+        },
+        "delete": {
+            "title": "¿Estás seguro de que querés eliminar esta estantería?",
+            "description": "También se eliminarán todas las lecturas de esta estantería.",
+            "confirm": "Eliminar estantería"
+        }
     },
     "reading": {
         "toastUpdateSuccess": "Lectura actualizada correctamente.",
@@ -119,7 +142,6 @@
     },
     "plan": {
         "title": "Cambiá de plan",
-        "ctaAddPremium": "Agregá Premium",
         "description": "Obtené los beneficios del plan Premium: lecturas ilimitadas y más de 1 estantería personalizable.",
         "btnUpgrade": "Pasar a Premium",
         "btnUpgrading": "Actualizando…",
@@ -127,6 +149,7 @@
         "toastErrorGeneric": "No se pudo cambiar el plan."
     },
     "graph": {
+        "header": "Tus estadísticas",
         "title": "Libros leídos por género",
         "datasetLabel": "Cantidad de libros"
     }

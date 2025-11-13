@@ -4,11 +4,23 @@
 	gap: 1.5rem;
 }
 
+.shelf-list-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.shelf-list-header .btn {
+	white-space: nowrap;
+}
+
 .shelf-list-title {
 	font-size: 1.75rem;
 	font-weight: 600;
 	color: var(--marronOscuro);
-	margin-bottom: 1.5rem;
+	margin: 0;
 }
 
 .shelf-list-items {

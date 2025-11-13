@@ -1,7 +1,6 @@
 {
     "login": {
         "btnLogin": "Sign in",
-        "btnLoggingIn": "Signing in...",
         "toastSuccess": "Signed in successfully.",
         "toastGenericError": "We couldn't sign you in. Please try again.",
         "toastSessionExpired": "Your session expired. Please sign in again.",
@@ -16,7 +15,6 @@
         "placeholderSurname": "Enter your last name",
         "placeholderPasswordCreate": "Create a password",
         "placeholderPasswordRepeat": "Repeat your password",
-        "btnCreatingAccount": "Creating account...",
         "linkHaveAccount": "← I already have an account",
         "toastSuccess": "Account created successfully.",
         "toastGenericError": "We couldn't create the account. Please try again."
@@ -26,7 +24,19 @@
     },
     "shelves": {
         "title": "Your shelves",
-        "toastLoadError": "We couldn't load your shelves. Please try again."
+        "toastLoadError": "We couldn't load your shelves. Please try again.",
+        "btnAddShelf": "Add shelf",
+        "toastAddSuccess": "Shelf created successfully.",
+        "toastAddError": "We couldn't create the shelf. Please try again.",
+        "form": {
+            "addTitle": "New shelf",
+            "editTitle": "Edit shelf",
+            "addDescription": "Create a new shelf to organize your readings.",
+            "editDescription": "Update the name of this shelf.",
+            "nameLabel": "Shelf name",
+            "btnCreate": "Create shelf",
+            "btnSave": "Save changes"
+        }
     },
     "shelf": {
         "btnAddReading": "Add reading",
@@ -41,7 +51,20 @@
         },
         "toastAddSuccess": "Reading added successfully.",
         "toastAddError": "We couldn't add the reading.",
-        "toastMaxReached": "You've reached your allowed readings limit. Upgrade to Premium to add more readings."
+        "toastMaxReached": "You've reached your allowed readings limit. Upgrade to Premium to add more readings.",
+        "toastUpdateSuccess": "Shelf updated successfully.",
+        "toastUpdateError": "We couldn't update the shelf.",
+        "toastDeleteSuccess": "Shelf deleted successfully.",
+        "toastDeleteError": "We couldn't delete the shelf.",
+        "actions": {
+            "edit": "Edit shelf",
+            "delete": "Delete shelf"
+        },
+        "delete": {
+            "title": "Are you sure you want to delete this shelf?",
+            "description": "All the readings on this shelf will also be removed..",
+            "confirm": "Delete shelf"
+        }
     },
     "reading": {
         "toastUpdateSuccess": "Reading updated successfully.",
@@ -119,7 +142,6 @@
     },
     "plan": {
         "title": "Change plan",
-        "ctaAddPremium": "Add Premium",
         "description": "Get the benefits of Premium: unlimited readings and more than 1 customizable shelf.",
         "btnUpgrade": "Upgrade to Premium",
         "btnUpgrading": "Upgrading…",
@@ -127,6 +149,7 @@
         "toastErrorGeneric": "We couldn't change the plan."
     },
     "graph": {
+        "header": "Your statistics",
         "title": "Books read by genre",
         "datasetLabel": "Number of books"
     }

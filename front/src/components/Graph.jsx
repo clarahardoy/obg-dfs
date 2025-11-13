@@ -68,32 +68,37 @@ export function Graph() {
     const toggleExpanded = () => setIsExpanded((prev) => !prev);
 
     return (
-        <section className="graph-card" role="region" aria-labelledby="graph-title">
-            <div
-                className="graph-card__header"
-                onClick={toggleExpanded}
-                style={{ cursor: 'pointer' }}
-            >
-                <div className="graph-card__header-left">
-                    {isExpanded ? (
-                        <ChevronUp className="graph-card__chevron" />
-                    ) : (
-                        <ChevronDown className="graph-card__chevron" />
-                    )}
-                    <BarChart3 className="graph-card__icon" aria-hidden />
-                    <h2 id="graph-title" className="graph-card__title">
-                        {t('graph.title')}
-                    </h2>
-                </div>
-            </div>
-
-            {isExpanded && (
-                <div className="graph-card__body">
-                    <div className="graph-card__canvas-wrapper">
-                        <Bar options={options} data={data} className="graph-card__canvas" />
+        <div>
+            <h2 className='shelf-list-title stats-title'>
+                {t('graph.header')}
+            </h2>
+            <section className="graph-card" role="region" aria-labelledby="graph-title">
+                <div
+                    className="graph-card__header"
+                    onClick={toggleExpanded}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <div className="graph-card__header-left">
+                        {isExpanded ? (
+                            <ChevronUp className="graph-card__chevron" />
+                        ) : (
+                            <ChevronDown className="graph-card__chevron" />
+                        )}
+                        <BarChart3 className="graph-card__icon" aria-hidden />
+                        <h2 id="graph-title" className="graph-card__title">
+                            {t('graph.title')}
+                        </h2>
                     </div>
                 </div>
-            )}
-        </section>
+
+                {isExpanded && (
+                    <div className="graph-card__body">
+                        <div className="graph-card__canvas-wrapper">
+                            <Bar options={options} data={data} className="graph-card__canvas" />
+                        </div>
+                    </div>
+                )}
+            </section>
+        </div>
     );
 }

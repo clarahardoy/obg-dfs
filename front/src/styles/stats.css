@@ -1,13 +1,16 @@
 .stats-grid {
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: 1.5rem; /* gap-6 */
-	margin-bottom: 2rem; /* mb-8 */
+	gap: 1.5rem;
+	/* gap-6 */
+	margin-bottom: 2rem;
+	/* mb-8 */
 }
 
 @media (min-width: 768px) {
 	.stats-grid {
-		grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
+		grid-template-columns: repeat(3, 1fr);
+		/* md:grid-cols-3 */
 	}
 }
 

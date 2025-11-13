@@ -11,6 +11,7 @@ import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
 import { useTranslation } from 'react-i18next';
+import { LoaderCircle } from 'lucide-react';
 
 const Login = () => {
 	const idEmail = useId();
@@ -127,10 +128,17 @@ const Login = () => {
 					<p>{error}</p>
 				</div>
 
-				<Boton type='submit' id='login-btn' disabled={!canSubmit || loading}>
-					{loading ? t('login.btnLoggingIn') : t('login.btnLogin')}
+				<Boton type='submit'
+					id='login-btn'
+					disabled={!canSubmit || loading}
+				>
+					{loading ? (
+						<LoaderCircle className='btn-spinner' size={18} />
+					) : (
+						t('login.btnLogin')
+					)}
 				</Boton>
-
+				
 				<div className='actions'>
 					<Link to='/register' className='back-btn'>
 						{t('common.actions.createAccount') + ' →'}

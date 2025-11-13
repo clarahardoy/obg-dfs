@@ -11,8 +11,6 @@ const Plan = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const membership = useSelector((state) => state.auth.membership) || localStorage.getItem('membership') || 'BASIC';
-
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     if (membership !== 'BASIC') return null;
@@ -37,31 +35,23 @@ const Plan = () => {
     };
 
     return (
-        <section className="plan" role="region" aria-labelledby="plan-title">
-            <header
-                className="plan__header"
-                onClick={() => setOpen((v) => !v)}
-                aria-expanded={open}
-            >
-                <span className={`plan__chevron ${open ? 'is-open' : ''}`} aria-hidden />
-                <h2 id="plan-title" className="plan__title">{t('plan.title')}</h2>
-                <span className="plan__cta-text">{t('plan.ctaAddPremium')}</span>
-            </header>
-
-            {open && (
-                <div className="plan__body">
+        <footer className="plan" role="contentinfo" aria-labelledby="plan-title">
+            <div className="plan__content">
+                <div className="plan__text">
+                    <h2 id="plan-title" className="plan__title">
+                        {t('plan.title')}
+                    </h2>
                     <p className="plan__desc">
                         {t('plan.description')}
                     </p>
-
-                    <div className="plan__actions">
-                        <Boton onClick={handleUpgrade} disabled={loading}>
-                            {loading ? t('plan.btnUpgrading') : t('plan.btnUpgrade')}
-                        </Boton>
-                    </div>
                 </div>
-            )}
-        </section>
+                <div className="plan__actions">
+                    <Boton onClick={handleUpgrade} disabled={loading}>
+                        {loading ? t('plan.btnUpgrading') : t('plan.btnUpgrade')}
+                    </Boton>
+                </div>
+            </div>
+        </footer>
     );
 };
 

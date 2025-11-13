@@ -1,5 +1,5 @@
 import '../styles/shelf.css';
-import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, ChevronDown, ChevronUp, LoaderCircle, Pencil, Trash2 } from 'lucide-react';
 import Reading from './Reading';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,13 +10,16 @@ import {
 	setAllShelfReadings,
 	setShelfReadings,
 	setShelfFilter,
+	updateShelfInList,
+	deleteShelfFromList,
 } from '../features/shelves.slice';
-import { getReadingsInShelf } from '../services/shelf.service';
+import { getReadingsInShelf, updateShelf, deleteShelf } from '../services/shelf.service';
 import { toast } from 'react-toastify';
 import { MembershipTypes } from '../utils/membership-types.js';
-import { LoaderCircle } from 'lucide-react';
 import { ReadingFilter, filterReadingsByDate } from '../utils/reading-filter';
 import { useTranslation } from 'react-i18next';
+import { ShelfForm } from './ShelfForm';
+import ModalConfirmacion from './ModalConfirmacion';
 
 const Shelf = ({ shelf }) => {
 	const dispatch = useDispatch();
@@ -24,6 +27,9 @@ const Shelf = ({ shelf }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isAddReadingOpen, setIsAddReadingOpen] = useState(false);
 	const [isLoadingReadings, setIsLoadingReadings] = useState(false);
+	const [isEditShelfOpen, setIsEditShelfOpen] = useState(false);
+	const [isDeleteShelfOpen, setIsDeleteShelfOpen] = useState(false);
+	const [isDeletingShelf, setIsDeletingShelf] = useState(false);
 
 	const allReadings = useSelector(
 		(state) => state.shelves.allReadingsByShelf[shelf._id] || []
@@ -36,6 +42,7 @@ const Shelf = ({ shelf }) => {
 	);
 	const userMembership = useSelector((state) => state.auth.membership);
 	const maxReadingsAllowed = useSelector((state) => state.auth.maxReadings);
+	const isPremium = userMembership === MembershipTypes.PREMIUM;
 
 	useEffect(() => {
 		const fetchReadings = async () => {
@@ -64,6 +71,19 @@ const Shelf = ({ shelf }) => {
 		setIsAddReadingOpen(true);
 	};
 
+	const handleOpenEditShelf = (e) => {
+		e.stopPropagation();
+		setIsEditShelfOpen(true);
+	};
+
+	const handleOpenDeleteShelf = (e) => {
+		e.stopPropagation();
+		setIsDeleteShelfOpen(true);
+	};
+	const maxReadingsReached =
+		allReadings.length == maxReadingsAllowed &&
+		userMembership == MembershipTypes.BASIC;
+
 	const handleAddReading = async (reading) => {
 		try {
 			const newReading = await createReading(reading);
@@ -87,9 +107,37 @@ const Shelf = ({ shelf }) => {
 		dispatch(setShelfFilter({ shelfId: shelf._id, filter }));
 	};
 
-	const maxReadingsReached =
-		allReadings.length == maxReadingsAllowed &&
-		userMembership == MembershipTypes.BASIC;
+	const handleUpdateShelf = async ({ name }) => {
+		try {
+			const updatedShelf = await updateShelf(shelf._id, name);
+			dispatch(
+				updateShelfInList({
+					shelfId: shelf._id,
+					name: updatedShelf.name,
+				})
+			);
+			toast.success(t('shelf.toastUpdateSuccess'));
+		} catch (error) {
+			console.error('No se pudo actualizar la estantería:', error);
+			toast.error(t('shelf.toastUpdateError'));
+			throw error;
+		}
+	};
+
+	const handleConfirmDeleteShelf = async () => {
+		try {
+			setIsDeletingShelf(true);
+			await deleteShelf(shelf._id);
+			dispatch(deleteShelfFromList(shelf._id));
+			toast.success(t('shelf.toastDeleteSuccess'));
+		} catch (error) {
+			console.error('No se pudo eliminar la estantería:', error);
+			toast.error(t('shelf.toastDeleteError'));
+		} finally {
+			setIsDeletingShelf(false);
+			setIsDeleteShelfOpen(false);
+		}
+	};
 
 	if (isLoadingReadings) {
 		return (
@@ -115,10 +163,34 @@ const Shelf = ({ shelf }) => {
 						)}
 						<h2 className='shelf-title'>{shelf.name}</h2>
 					</div>
-					<button className='btn btn-ghost btn-sm' onClick={handleOpenModal}>
-						<Plus className='h-4 w-4' />
-						{t('shelf.btnAddReading')}
-					</button>
+
+					<div className='shelf-not-expanded-right'>
+						<button className='btn btn-ghost btn-sm' onClick={handleOpenModal}>
+							<Plus className='h-4 w-4' />
+							{t('shelf.btnAddReading')}
+						</button>
+
+						{isPremium && (
+							<>
+								<button
+									type='button'
+									className='btn btn-ghost btn-sm'
+									onClick={handleOpenEditShelf}
+									aria-label={t('shelf.actions.edit')}
+								>
+									<Pencil className='h-4 w-4' />
+								</button>
+								<button
+									type='button'
+									className='btn btn-ghost btn-sm'
+									onClick={handleOpenDeleteShelf}
+									aria-label={t('shelf.actions.delete')}
+								>
+									<Trash2 className='h-4 w-4' />
+								</button>
+							</>
+						)}
+					</div>
 				</div>
 
 				{isExpanded && (
@@ -126,8 +198,8 @@ const Shelf = ({ shelf }) => {
 						<div className='shelf-filters'>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.VER_TODOS
-									? 'btn-default'
-									: 'btn-ghost'
+										? 'btn-default'
+										: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.VER_TODOS)}
 							>
@@ -135,26 +207,28 @@ const Shelf = ({ shelf }) => {
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMA_SEMANA
-									? 'btn-default'
-									: 'btn-ghost'
+										? 'btn-default'
+										: 'btn-ghost'
 									}`}
-								onClick={() => handleFilterClick(ReadingFilter.ULTIMA_SEMANA)}
+								onClick={() =>
+									handleFilterClick(ReadingFilter.ULTIMA_SEMANA)
+								}
 							>
 								{t('shelf.filters.finishedLastWeek')}
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMO_MES
-									? 'btn-default'
-									: 'btn-ghost'
+										? 'btn-default'
+										: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.ULTIMO_MES)}
 							>
-								 {t('shelf.filters.finishedLastMonth')}
+								{t('shelf.filters.finishedLastMonth')}
 							</button>
 							<button
 								className={`btn btn-sm ${currentFilter === ReadingFilter.HISTORICO
-									? 'btn-default'
-									: 'btn-ghost'
+										? 'btn-default'
+										: 'btn-ghost'
 									}`}
 								onClick={() => handleFilterClick(ReadingFilter.HISTORICO)}
 							>
@@ -175,12 +249,35 @@ const Shelf = ({ shelf }) => {
 					</>
 				)}
 			</div>
+
 			<AddReading
 				open={isAddReadingOpen}
 				onClose={() => setIsAddReadingOpen(false)}
 				shelfId={shelf._id}
 				onAdd={handleAddReading}
 			/>
+
+			{isPremium && (
+				<>
+					<ShelfForm
+						open={isEditShelfOpen}
+						onClose={() => setIsEditShelfOpen(false)}
+						onSubmit={handleUpdateShelf}
+						defaultName={shelf.name}
+					/>
+
+					<ModalConfirmacion
+						isOpen={isDeleteShelfOpen}
+						onClose={() => setIsDeleteShelfOpen(false)}
+						onConfirm={handleConfirmDeleteShelf}
+						title={t('shelf.delete.title')}
+						description={t('shelf.delete.description')}
+						confirmText={t('shelf.delete.confirm')}
+						cancelText={t('common.actions.cancel')}
+						isDisabled={isDeletingShelf}
+					/>
+				</>
+			)}
 		</>
 	);
 };

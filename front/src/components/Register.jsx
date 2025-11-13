@@ -7,10 +7,11 @@ import { registerService } from '../services/auth.service.js';
 import { loguear } from '../features/auth.slice.js';
 import { registerValidator } from '../validators/auth.validators.js';
 import { toast } from 'react-toastify';
+import { Trans, useTranslation } from 'react-i18next';
+import { LoaderCircle } from 'lucide-react';
 import MineTitle from './MineTitle.jsx';
 import Boton from './Boton.jsx';
 import Logo from './Logo.jsx';
-import { Trans, useTranslation } from 'react-i18next';
 
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
@@ -83,7 +84,7 @@ const Register = () => {
 			`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
 			{ method: 'POST', body: fd }
 		);
-		
+
 		let body;
 		try { body = await res.json(); } catch { body = {}; }
 		if (!res.ok) {
@@ -262,9 +263,13 @@ const Register = () => {
 					type='submit'
 					id='register-btn'
 					className='btn btn-muted'
-					disabled={!canSubmit}
+					disabled={!canSubmit || loading}
 				>
-					{loading ? t('register.btnCreatingAccount') : t('common.actions.createAccount')}
+					{loading ? (
+						<LoaderCircle className='btn-spinner' size={18} />
+					) : (
+						t('common.actions.createAccount')
+					)}
 				</Boton>
 
 				<div className='actions'>

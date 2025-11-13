@@ -13,7 +13,7 @@ export const getUserShelves = async () => {
 export const createShelf = async (name) => {
 	try {
 		const response = await apiClient.post('/shelves', { name });
-		return response.data;
+		return response.data.shelf;
 	} catch (error) {
 		console.error('No se pudo crear la estantería:', error);
 		throw error;
@@ -23,7 +23,7 @@ export const createShelf = async (name) => {
 export const updateShelf = async (id, name) => {
 	try {
 		const response = await apiClient.patch(`/shelves/${id}`, { name });
-		return response.data;
+		return response.data.shelf;
 	} catch (error) {
 		console.error('No se pudo actualizar la estantería:', error);
 		throw error;

@@ -39,14 +39,21 @@ export const shelvesSlice = createSlice({
 				state.readingsByShelf[shelfId] = [reading];
 			}
 		},
-		deleteReadingFromShelf: (state, action) => {
-			const { shelfId, readingId } = action.payload;
-			state.allReadingsByShelf[shelfId] = state.allReadingsByShelf[shelfId].filter(
-				(reading) => reading._id !== readingId
-			);
-			state.readingsByShelf[shelfId] = state.readingsByShelf[shelfId].filter(
-				(reading) => reading._id !== readingId
-			);
+		deleteShelfFromList: (state, action) => {
+			const shelfId = action.payload;
+			if (!shelfId) return;
+
+			state.shelves = state.shelves.filter((shelf) => shelf._id !== shelfId);
+
+			if (state.allReadingsByShelf[shelfId]) {
+				delete state.allReadingsByShelf[shelfId];
+			}
+			if (state.readingsByShelf[shelfId]) {
+				delete state.readingsByShelf[shelfId];
+			}
+			if (state.currentFilter[shelfId]) {
+				delete state.currentFilter[shelfId];
+			}
 		},
 		updateReadingInShelf: (state, action) => {
 			const { shelfId, readingId, updatedReading } = action.payload;
@@ -69,6 +76,25 @@ export const shelvesSlice = createSlice({
 				}
 			}
 		},
+		addShelfToList: (state, action) => {
+			const shelf = action.payload;
+			if (!shelf || !shelf._id) return;
+			state.shelves.push(shelf);
+		},
+		updateShelfInList: (state, action) => {
+			const { shelfId, name } = action.payload;
+			const shelf = state.shelves.find((s) => s._id === shelfId);
+			if (shelf) {
+				shelf.name = name;
+			}
+		},
+		deleteShelfFromList: (state, action) => {
+			const shelfId = action.payload;
+			state.shelves = state.shelves.filter((shelf) => shelf._id !== shelfId);
+			delete state.allReadingsByShelf[shelfId];
+			delete state.readingsByShelf[shelfId];
+			delete state.currentFilter[shelfId];
+		},
 		resetShelves: () => initialState,
 	},
 });
@@ -81,7 +107,9 @@ export const {
 	addReadingToShelf,
 	deleteReadingFromShelf,
 	updateReadingInShelf,
+	addShelfToList,
+	updateShelfInList,
+	deleteShelfFromList,
 	resetShelves,
 } = shelvesSlice.actions;
-
 export default shelvesSlice.reducer;

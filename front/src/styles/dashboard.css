@@ -11,6 +11,7 @@
 	background-color: var(--gris);
 	backdrop-filter: blur(10px);
 	border-radius: 1.5rem;
+	padding-bottom: 6.5rem;
 }
 
 .dashboard-title {
