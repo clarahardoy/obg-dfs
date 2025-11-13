@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const getInitialState = () => ({
 	shelves: [],
-	allReadingsByShelf: [], // Store all readings without filter
-	readingsByShelf: [],    // Store filtered readings for display
-	currentFilter: [],      // Track current filter per shelf
-};
+	allReadingsByShelf: {},
+	readingsByShelf: {},
+	currentFilter: {},
+});
+
+const initialState = getInitialState();
 
 export const shelvesSlice = createSlice({
 	name: 'shelves',
@@ -16,11 +18,11 @@ export const shelvesSlice = createSlice({
 		},
 		setAllShelfReadings: (state, action) => {
 			const { shelfId, readings } = action.payload;
-			state.allReadingsByShelf[shelfId] = readings;
+			state.allReadingsByShelf[shelfId] = readings ?? [];
 		},
 		setShelfReadings: (state, action) => {
 			const { shelfId, readings } = action.payload;
-			state.readingsByShelf[shelfId] = readings;
+			state.readingsByShelf[shelfId] = readings ?? [];
 		},
 		setShelfFilter: (state, action) => {
 			const { shelfId, filter } = action.payload;
@@ -28,52 +30,40 @@ export const shelvesSlice = createSlice({
 		},
 		addReadingToShelf: (state, action) => {
 			const { shelfId, reading } = action.payload;
-			if (state.allReadingsByShelf[shelfId]) {
-				state.allReadingsByShelf[shelfId].push(reading);
-			} else {
-				state.allReadingsByShelf[shelfId] = [reading];
-			}
-			if (state.readingsByShelf[shelfId]) {
-				state.readingsByShelf[shelfId].push(reading);
-			} else {
-				state.readingsByShelf[shelfId] = [reading];
-			}
+			const all = state.allReadingsByShelf[shelfId] ?? [];
+			const filtered = state.readingsByShelf[shelfId] ?? [];
+			state.allReadingsByShelf[shelfId] = [...all, reading];
+			state.readingsByShelf[shelfId] = [...filtered, reading];
 		},
-		deleteShelfFromList: (state, action) => {
-			const shelfId = action.payload;
-			if (!shelfId) return;
-
-			state.shelves = state.shelves.filter((shelf) => shelf._id !== shelfId);
-
-			if (state.allReadingsByShelf[shelfId]) {
-				delete state.allReadingsByShelf[shelfId];
+		deleteReadingFromShelf: (state, action) => {
+			const { shelfId, readingId } = action.payload;
+			const all = state.allReadingsByShelf[shelfId];
+			if (Array.isArray(all)) {
+				state.allReadingsByShelf[shelfId] = all.filter(
+					(r) => r._id !== readingId
+				);
 			}
-			if (state.readingsByShelf[shelfId]) {
-				delete state.readingsByShelf[shelfId];
-			}
-			if (state.currentFilter[shelfId]) {
-				delete state.currentFilter[shelfId];
+			const filtered = state.readingsByShelf[shelfId];
+			if (Array.isArray(filtered)) {
+				state.readingsByShelf[shelfId] = filtered.filter(
+					(r) => r._id !== readingId
+				);
 			}
 		},
 		updateReadingInShelf: (state, action) => {
 			const { shelfId, readingId, updatedReading } = action.payload;
-			const allReadings = state.allReadingsByShelf[shelfId];
-			if (allReadings) {
-				const allIndex = allReadings.findIndex(
-					(reading) => reading._id === readingId
+
+			const all = state.allReadingsByShelf[shelfId];
+			if (Array.isArray(all)) {
+				state.allReadingsByShelf[shelfId] = all.map((r) =>
+					r._id === readingId ? updatedReading : r
 				);
-				if (allIndex !== -1) {
-					allReadings[allIndex] = updatedReading;
-				}
 			}
-			const filteredReadings = state.readingsByShelf[shelfId];
-			if (filteredReadings) {
-				const filteredIndex = filteredReadings.findIndex(
-					(reading) => reading._id === readingId
+			const filtered = state.readingsByShelf[shelfId];
+			if (Array.isArray(filtered)) {
+				state.readingsByShelf[shelfId] = filtered.map((r) =>
+					r._id === readingId ? updatedReading : r
 				);
-				if (filteredIndex !== -1) {
-					filteredReadings[filteredIndex] = updatedReading;
-				}
 			}
 		},
 		addShelfToList: (state, action) => {
@@ -81,6 +71,7 @@ export const shelvesSlice = createSlice({
 			if (!shelf || !shelf._id) return;
 			state.shelves.push(shelf);
 		},
+
 		updateShelfInList: (state, action) => {
 			const { shelfId, name } = action.payload;
 			const shelf = state.shelves.find((s) => s._id === shelfId);
@@ -90,12 +81,14 @@ export const shelvesSlice = createSlice({
 		},
 		deleteShelfFromList: (state, action) => {
 			const shelfId = action.payload;
+			if (!shelfId) return;
+
 			state.shelves = state.shelves.filter((shelf) => shelf._id !== shelfId);
 			delete state.allReadingsByShelf[shelfId];
 			delete state.readingsByShelf[shelfId];
 			delete state.currentFilter[shelfId];
 		},
-		resetShelves: () => initialState,
+		resetShelves: () => getInitialState(),
 	},
 });
 
@@ -112,4 +105,5 @@ export const {
 	deleteShelfFromList,
 	resetShelves,
 } = shelvesSlice.actions;
+
 export default shelvesSlice.reducer;

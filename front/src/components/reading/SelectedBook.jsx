@@ -4,17 +4,20 @@ import { useTranslation } from 'react-i18next';
 
 export const SelectedBook = ({ book, onBookChange }) => {
 	const { t } = useTranslation();
+	const toSecureUrl = (url) =>
+		typeof url === 'string' ? url.replace(/^http:\/\//i, 'https://') : url;
+	const thumb = toSecureUrl(book.thumbnail);
 	return (
 		<div className='selected-book-card'>
 			<div className='selected-book-header'>
-				{book.thumbnail ? (
+				{thumb ? (
 					<img
-						src={book.thumbnail}
+						src={thumb}
 						alt={book.title}
 						className='selected-book-thumbnail'
 					/>
 				) : (
-					<Book size={24} />
+					<Book size={32} />
 				)}
 				<div className='selected-book-info'>
 					<h3 className='selected-book-title'>{book.title}</h3>

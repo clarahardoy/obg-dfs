@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReadingForm } from './reading/ReadingForm';
 import { calculateProgress } from '../utils/calculate-progress';
 import { getStatusLabel, ReadingStatus } from '../utils/reading-status';
-import { filterReadingsByDate } from '../utils/reading-filter';
+import { filterReadingsByDate, ReadingFilter } from '../utils/reading-filter';
 import { formatDateForInput } from '../utils/format-date';
 import { useTranslation } from 'react-i18next';
 
@@ -65,11 +65,11 @@ const Reading = ({ reading }) => {
 				startedReading: startedReading ? startedReading : null,
 				finishedReading: finishedReading ? finishedReading : null,
 			};
+
 			await updateReadingById(reading._id, updatedData);
 
 			const fullUpdatedReading = { ...reading, ...updatedData };
 
-			// ACTUALIZAR LA LECTURA EN EL STORE
 			dispatch(
 				updateReadingInShelf({
 					shelfId: reading.shelfId,
@@ -78,14 +78,17 @@ const Reading = ({ reading }) => {
 				})
 			);
 
-			// RECALCULAR FILTRO PARA VER SI LA LECTURA SIGUE CUMPLIENDO CON EL FILTRO
-			const updatedAllReadings = allReadings.map((r) =>
+			const baseAllReadings = Array.isArray(allReadings) ? allReadings : [];
+			const updatedAllReadings = baseAllReadings.map((r) =>
 				r._id === reading._id ? fullUpdatedReading : r
 			);
+
+			const filterToUse = currentFilter || ReadingFilter.VER_TODOS;
 			const filteredReadings = filterReadingsByDate(
 				updatedAllReadings,
-				currentFilter
+				filterToUse
 			);
+
 			dispatch(
 				setShelfReadings({
 					shelfId: reading.shelfId,
@@ -124,14 +127,17 @@ const Reading = ({ reading }) => {
 	};
 
 	const progress = calculateProgress(reading);
+	const toSecureUrl = (url) =>
+		typeof url === 'string' ? url.replace(/^http:\/\//i, 'https://') : url;
+	const thumbnailUrl = toSecureUrl(reading.book.thumbnail);
 
 	return (
 		<>
 			<div className='reading-card'>
 				<div className='reading-card-thumbnail'>
-					{reading.book.thumbnail ? (
+					{thumbnailUrl ? (
 						<img
-							src={reading.book.thumbnail}
+							src={thumbnailUrl}
 							alt={reading.book.title}
 							className='reading-card-image'
 						/>

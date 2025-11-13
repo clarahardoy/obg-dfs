@@ -9,4 +9,9 @@ export const store = configureStore({
 		shelves: shelvesReducer,
 		auth: authReducer,
 	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false,
+			immutableCheck: false,
+		}),
 });
