@@ -1,5 +1,12 @@
 import '../styles/shelf.css';
-import { Plus, ChevronDown, ChevronUp, LoaderCircle, Pencil, Trash2 } from 'lucide-react';
+import {
+	Plus,
+	ChevronDown,
+	ChevronUp,
+	LoaderCircle,
+	Pencil,
+	Trash2,
+} from 'lucide-react';
 import Reading from './Reading';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +20,11 @@ import {
 	updateShelfInList,
 	deleteShelfFromList,
 } from '../features/shelves.slice';
-import { getReadingsInShelf, updateShelf, deleteShelf } from '../services/shelf.service';
+import {
+	getReadingsInShelf,
+	updateShelf,
+	deleteShelf,
+} from '../services/shelf.service';
 import { toast } from 'react-toastify';
 import { MembershipTypes } from '../utils/membership-types.js';
 import { ReadingFilter, filterReadingsByDate } from '../utils/reading-filter';
@@ -33,12 +44,17 @@ const Shelf = ({ shelf }) => {
 	const [isDeleteShelfOpen, setIsDeleteShelfOpen] = useState(false);
 	const [isDeletingShelf, setIsDeletingShelf] = useState(false);
 
-	const allReadingsByShelf = useSelector((state) => state.shelves.allReadingsByShelf);
+	const allReadingsByShelf = useSelector(
+		(state) => state.shelves.allReadingsByShelf
+	);
 	const readingsByShelf = useSelector((state) => state.shelves.readingsByShelf);
-	const currentFilterByShelf = useSelector((state) => state.shelves.currentFilter);
+	const currentFilterByShelf = useSelector(
+		(state) => state.shelves.currentFilter
+	);
 	const allReadings = allReadingsByShelf?.[shelf._id] ?? EMPTY_ARRAY;
 	const filteredReadings = readingsByShelf?.[shelf._id] ?? EMPTY_ARRAY;
-	const currentFilter = currentFilterByShelf?.[shelf._id] ?? ReadingFilter.VER_TODOS;
+	const currentFilter =
+		currentFilterByShelf?.[shelf._id] ?? ReadingFilter.VER_TODOS;
 
 	const userMembership = useSelector((state) => state.auth.membership);
 	const maxReadingsAllowed = useSelector((state) => state.auth.maxReadings);
@@ -142,7 +158,7 @@ const Shelf = ({ shelf }) => {
 	if (isLoadingReadings) {
 		return (
 			<div className='shelf-loading'>
-				<LoaderCircle className='input-spinner' size={18} />
+				<LoaderCircle className='input-spinner' size={40} />
 			</div>
 		);
 	}
@@ -197,39 +213,41 @@ const Shelf = ({ shelf }) => {
 					<>
 						<div className='shelf-filters'>
 							<button
-								className={`btn btn-sm ${currentFilter === ReadingFilter.VER_TODOS
-									? 'btn-default'
-									: 'btn-ghost'
-									}`}
+								className={`btn btn-sm ${
+									currentFilter === ReadingFilter.VER_TODOS
+										? 'btn-default'
+										: 'btn-ghost'
+								}`}
 								onClick={() => handleFilterClick(ReadingFilter.VER_TODOS)}
 							>
 								{t('shelf.filters.showAll')}
 							</button>
 							<button
-								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMA_SEMANA
-									? 'btn-default'
-									: 'btn-ghost'
-									}`}
-								onClick={() =>
-									handleFilterClick(ReadingFilter.ULTIMA_SEMANA)
-								}
+								className={`btn btn-sm ${
+									currentFilter === ReadingFilter.ULTIMA_SEMANA
+										? 'btn-default'
+										: 'btn-ghost'
+								}`}
+								onClick={() => handleFilterClick(ReadingFilter.ULTIMA_SEMANA)}
 							>
 								{t('shelf.filters.finishedLastWeek')}
 							</button>
 							<button
-								className={`btn btn-sm ${currentFilter === ReadingFilter.ULTIMO_MES
-									? 'btn-default'
-									: 'btn-ghost'
-									}`}
+								className={`btn btn-sm ${
+									currentFilter === ReadingFilter.ULTIMO_MES
+										? 'btn-default'
+										: 'btn-ghost'
+								}`}
 								onClick={() => handleFilterClick(ReadingFilter.ULTIMO_MES)}
 							>
 								{t('shelf.filters.finishedLastMonth')}
 							</button>
 							<button
-								className={`btn btn-sm ${currentFilter === ReadingFilter.HISTORICO
-									? 'btn-default'
-									: 'btn-ghost'
-									}`}
+								className={`btn btn-sm ${
+									currentFilter === ReadingFilter.HISTORICO
+										? 'btn-default'
+										: 'btn-ghost'
+								}`}
 								onClick={() => handleFilterClick(ReadingFilter.HISTORICO)}
 							>
 								{t('shelf.filters.finishedAllTime')}

@@ -29,6 +29,20 @@
 	gap: 1.5rem;
 }
 
+.shelf-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3rem 2rem;
+	min-height: 150px;
+	color: var(--marronClaro);
+}
+
+.shelf-loading .input-spinner {
+	position: relative;
+	right: auto;
+}
+
 .shelf {
 	background-color: var(--gris);
 	border: 1px solid var(--grisMediano);
