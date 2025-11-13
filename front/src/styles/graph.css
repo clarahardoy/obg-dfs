@@ -1,0 +1,57 @@
+.graph-card {
+	background-color: var(--gris);
+	border: 1px solid var(--grisMediano);
+	border-radius: var(--radius);
+	overflow: hidden;
+	margin-block: 1.5rem;
+}
+
+.graph-card:hover {
+	border-color: var(--marronOscuro);
+}
+
+.graph-card__header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 1rem 1.25rem;
+}
+
+.graph-card__icon {
+	width: 20px;
+	height: 20px;
+	color: var(--marronOscuro);
+}
+
+.graph-card__title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--marronOscuro);
+	margin: 0;
+}
+
+.graph-card__body {
+	border-top: 1px solid var(--grisMediano);
+	padding: 0.75rem 1.25rem 1.25rem;
+}
+
+.graph-card__canvas {
+	width: 100% !important;
+	height: 320px !important;
+}
+
+.graph-card__empty {
+	color: var(--grisOscuro);
+	padding: 0.75rem 1.25rem 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+	.graph-card__canvas {
+		height: 260px !important;
+	}
+
+	.graph-card {
+		margin-block: 1rem;
+	}
+}

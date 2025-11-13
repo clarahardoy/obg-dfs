@@ -125,5 +125,9 @@
         "btnUpgrading": "Upgrading…",
         "toastSuccess": "You're PREMIUM now!",
         "toastErrorGeneric": "We couldn't change the plan."
+    },
+    "graph": {
+        "title": "Books read by genre",
+        "datasetLabel": "Number of books"
     }
 }

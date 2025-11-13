@@ -125,5 +125,9 @@
         "btnUpgrading": "Actualizando…",
         "toastSuccess": "¡Ahora sos PREMIUM!",
         "toastErrorGeneric": "No se pudo cambiar el plan."
+    },
+    "graph": {
+        "title": "Libros leídos por género",
+        "datasetLabel": "Cantidad de libros"
     }
 }
