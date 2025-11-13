@@ -17,6 +17,7 @@ const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
 
 const Register = () => {
+	// vamos a hacer redeply
 	const idNombre = useId();
 	const idApellido = useId();
 	const idEmail = useId();
