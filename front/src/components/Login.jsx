@@ -71,7 +71,7 @@ const Login = () => {
 				toast.success((t('login.toastSuccess')));
 			}
 		} catch (err) {
-			const msg = err?.response?.data?.message
+			const msg = err?.response?.data?.error
 			setError(msg || '');
 		} finally {
 			setLoading(false);

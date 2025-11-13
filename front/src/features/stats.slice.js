@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     totalPagesRead: 0,
     mostReadGenre: null,
+    booksByGenre: [],
 };
 
 const statsSlice = createSlice({
@@ -12,10 +13,12 @@ const statsSlice = createSlice({
         setStats: (state, action) => {
             state.totalPagesRead = action.payload.totalPagesRead;
             state.mostReadGenre = action.payload.mostReadGenre;
+            state.booksByGenre = action.payload.booksByGenre ?? [];
         },
         deleteStats: (state) => {
             state.totalPagesRead = 0;
             state.mostReadGenre = null;
+            state.booksByGenre = [];
         },
     },
 });

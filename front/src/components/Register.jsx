@@ -145,7 +145,7 @@ const Register = () => {
 				setValue('repeatPassword', '');
 			}
 		} catch (err) {
-			const msg = err?.response?.data?.message || err?.message;
+			const msg = err?.response?.data?.error || err?.error;
 			setValue('password', '');
 			setValue('repeatPassword', '');
 			setError(msg || '');

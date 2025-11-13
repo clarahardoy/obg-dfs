@@ -62,7 +62,8 @@ const StatsSection = () => {
 			try {
 				setLoading(true);
 				const data = await getReadingStatsByShelf();
-				if (!ignore && data?.stats) dispatch(setStats(data.stats));
+				const stats = data?.stats;
+				if (!ignore && stats) dispatch(setStats(stats));
 			} catch (err) {
 				console.error(t('stats.toastGenericError'), err);
 			} finally {
